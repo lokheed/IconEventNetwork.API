@@ -1,6 +1,9 @@
+const config = {
+  locales: ['fr'],
+};
+const bootstrap = () => {};
+
 export default {
-  config: {
-    locales: ['fr'],
-  },
-  bootstrap() {},
+  config,
+  bootstrap,
 };
