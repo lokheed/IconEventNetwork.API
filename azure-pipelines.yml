@@ -1,19 +1,140 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  branches:
+    include: [main]
 
-pool:
-  vmImage: ubuntu-latest
+variables:
+  projectRoot: '$(Build.SourcesDirectory)'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: BuildApi
+  displayName: 'Build Api'
+  pool:
+    vmImage: ubuntu-latest
+  jobs:
+  - job: BuildApi
+    displayName: 'Build Api'
+    dependsOn: []
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSpec: '16.x'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      - script: |
+          rm -rf node_modules/
+          npm install --production
+          NODE_ENV=production npm run build
+        displayName: 'npm install and build'
+        workingDirectory: 'IconEventNetwork-api'
+
+      - task: ArchiveFiles@2
+        displayName: Zip artifact files
+        inputs:
+          rootFolderOrFile: '$(projectRoot)/IconEventNetwork-api'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(projectRoot)/api.zip'
+          replaceExistingArchive: true
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: Strapi files'
+        inputs:
+          PathtoPublish: '$(projectRoot)/api.zip'
+          ArtifactName: 'api'
+          publishLocation: 'Container'
+
+- stage: DeployApiQA
+  dependsOn: BuildApi
+  displayName: Deploy api to QA
+  jobs:
+    - deployment: DeployApiQA
+      displayName: Deploy api to QA
+      environment:
+       name: AWS-QA
+       resourceType: VirtualMachine
+      pool:
+        vmImage: ubuntu-latest
+      strategy: 
+        runOnce:
+          deploy:
+            steps:
+              - download: current
+                artifact: 'api'
+
+              - task: Bash@3
+                displayName: unzip artifact files
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    unzip -o '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
+             
+              - task: Bash@3
+                displayName: copy files
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/ubuntu/api'
+
+- stage: DeployApiStaging
+  dependsOn: DeployApiQA
+  displayName: Deploy api to staging
+  jobs:
+    - deployment: DeployApiStaging
+      displayName: Deploy api to staging
+      environment:
+       name: AWS-STG
+       resourceType: VirtualMachine
+      pool:
+        vmImage: ubuntu-latest
+      strategy: 
+        runOnce:
+          deploy:
+            steps:
+              - download: current
+                artifact: 'api'
+              
+              - task: Bash@3
+                displayName: unzip artifact files
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    unzip '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
+             
+              - task: Bash@3
+                displayName: copy files
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/devops/api'
+
+- stage: DeployApiProduction
+  dependsOn: DeployApiStaging
+  displayName: Deploy api to production
+  jobs:
+    - deployment: DeployApiProduction
+      displayName: Deploy api to production
+      environment:
+       name: AWS-PROD
+       resourceType: VirtualMachine
+      pool:
+        vmImage: ubuntu-latest
+      strategy: 
+        runOnce:
+          deploy:
+            steps:
+              - download: current
+                artifact: 'api'
+              
+              - task: Bash@3
+                displayName: unzip artifact files
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    unzip '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
+             
+              - task: Bash@3
+                displayName: copy files
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/devops/api'
