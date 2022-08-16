@@ -73,6 +73,7 @@ stages:
                 inputs:
                   targetType: 'inline'
                   script: |
+                    mkdir -p /home/ubuntu/api
                     cp -r '$(Pipeline.Workspace)/api/files/'* '/home/ubuntu/api'
 
 - stage: DeployApiStaging
@@ -98,14 +99,15 @@ stages:
                 inputs:
                   targetType: 'inline'
                   script: |
-                    unzip '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
+                    unzip -o '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
              
               - task: Bash@3
                 displayName: copy files
                 inputs:
                   targetType: 'inline'
                   script: |
-                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/devops/api'
+                    mkdir -p /home/ubuntu/api
+                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/ubuntu/api'
 
 - stage: DeployApiProduction
   dependsOn: DeployApiStaging
@@ -130,11 +132,12 @@ stages:
                 inputs:
                   targetType: 'inline'
                   script: |
-                    unzip '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
+                    unzip -o '$(Pipeline.Workspace)/api/api.zip' -d '$(Pipeline.Workspace)/api/files'
              
               - task: Bash@3
                 displayName: copy files
                 inputs:
                   targetType: 'inline'
                   script: |
-                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/devops/api'
+                    mkdir -p /home/ubuntu/api
+                    cp -r '$(Pipeline.Workspace)/api/files/'* '/home/ubuntu/api'
