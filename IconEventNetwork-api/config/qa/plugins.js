@@ -3,7 +3,7 @@ module.exports = ({ env }) => ({
       provider: 'mailtrap',
       providerOptions: {
         user: env('MAILTRAP_USER'),
-        password: env('MAILTRAP_PASSWORD', 'default_pass')
+        password: env('MAILTRAP_PASSWORD')
       },
       settings: {
         defaultFrom: env('MAILTRAP_DEFAULT_FROM'),
