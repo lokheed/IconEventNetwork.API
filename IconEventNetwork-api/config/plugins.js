@@ -23,19 +23,14 @@ module.exports = ({ env }) => ({
   },
   email: {
     config: {
-      provider: env('EMAIL_PROVIDER'),
+      provider: 'sendgrid',
       providerOptions: {
-        host: env('EMAIL_SMTP_HOST'),
-        port: env('EMAIL_SMTP_PORT'),
-        auth: {
-          user: env('EMAIL_SMTP_USER'),
-          pass: env('EMAIL_SMTP_PASS'),
-        },
+        apiKey: env('SENDGRID_API_KEY'),
       },
       settings: {
-        defaultFrom: env('EMAIL_ADDRESS_FROM'),
-        defaultReplyTo: env('EMAIL_ADDRESS_REPLY'),
-      },  
+        defaultFrom: 'no-reply@IconEventNetwork.com',
+        defaultReplyTo: 'no-reply@IconEventNetwork.com',
+      },
     },
   },
 });
