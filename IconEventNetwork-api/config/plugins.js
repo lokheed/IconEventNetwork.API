@@ -32,10 +32,10 @@ module.exports = ({ env }) => ({
           pass: env('EMAIL_SMTP_PASS'),
         },
       },
+      settings: {
+        defaultFrom: env('EMAIL_ADDRESS_FROM'),
+        defaultReplyTo: env('EMAIL_ADDRESS_REPLY'),
+      },  
     },
-    settings: {
-      defaultFrom: env('EMAIL_ADDRESS_FROM'),
-      defaultReplyTo: env('EMAIL_ADDRESS_REPLY'),
-    },  
   },
 });
