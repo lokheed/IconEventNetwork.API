@@ -15,7 +15,7 @@
     "@strapi/provider-email-sendgrid": "^4.3.6",
     "@strapi/strapi": "4.3.6",
     "better-sqlite3": "7.4.6",
-    "strapi-provider-email-mailtrap": "^3.5.0"
+    "strapi-provider-email-smtp": "^1.0.3"
   },
   "author": {
     "name": "A Strapi developer"
