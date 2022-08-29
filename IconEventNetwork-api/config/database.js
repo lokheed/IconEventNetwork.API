@@ -11,7 +11,7 @@ module.exports = ({ env }) => {
         useNullAsDefault: true,
       },
     }
-  } else if (env('NODE_ENV') === 'qa' || env('NODE_ENV') === 'staging' || env('NODE_ENV') === 'production') {
+  } else if (env('NODE_ENV') === 'qa' || env('NODE_ENV') === 'stg' || env('NODE_ENV') === 'production') {
     return {
       connection: {
         client: 'postgres',
