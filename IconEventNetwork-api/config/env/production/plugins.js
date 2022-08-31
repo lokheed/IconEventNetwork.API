@@ -1,17 +1,12 @@
 module.exports = ({ env }) => ({
     email: {
       config: {
-        provider: 'strapi-provider-email-smtp',
+        provider: 'amazon-ses',
         providerOptions: {
-          host: 'smtp.office365.com',
-          port: 587   , 
-          secure: false,
-          username: env('SMTP_USER'),
-          password: env('SMTP_PASSWORD'),
-          rejectUnauthorized: false,
-          requireTLS: true,
-          connectionTimeout: 10,
-        },
+          key: env('AWS_ACCESS_KEY_ID'),
+          secret: env('AWS_ACCESS_SECRET'),
+          amazon: 'https://email.us-east-1.amazonaws.com',
+          },
       },
       settings: {
         defaultFrom: 'no-reply@IconEventNetwork.com',
