@@ -1,12 +1,10 @@
 module.exports = ({ env }) => ({
     email: {
       config: {
-        provider: 'amazon-ses',
+        provider: 'sendgrid',
         providerOptions: {
-          key: env('AWS_ACCESS_KEY_ID'),
-          secret: env('AWS_ACCESS_SECRET'),
-          amazon: 'https://email.us-east-1.amazonaws.com',
-          },
+          apiKey: env('SENDGRID_API_KEY'),
+        },
       },
       settings: {
         defaultFrom: 'no-reply@IconEventNetwork.com',
