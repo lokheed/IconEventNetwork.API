@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prefixes",
+  "info": {
+    "singularName": "prefix",
+    "pluralName": "prefixes",
+    "displayName": "Prefix"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}
