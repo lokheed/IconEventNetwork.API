@@ -1,14 +1,14 @@
 {
   "kind": "collectionType",
-  "collectionName": "prefixes",
+  "collectionName": "suffixes",
   "info": {
-    "singularName": "prefix",
-    "pluralName": "prefixes",
-    "displayName": "Prefix",
+    "singularName": "suffix",
+    "pluralName": "suffixes",
+    "displayName": "Suffix",
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
