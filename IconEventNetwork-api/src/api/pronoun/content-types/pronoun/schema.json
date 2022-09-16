@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "prefixes",
+  "collectionName": "pronouns",
   "info": {
-    "singularName": "prefix",
-    "pluralName": "prefixes",
-    "displayName": "Prefix",
-    "description": ""
+    "singularName": "pronoun",
+    "pluralName": "pronouns",
+    "displayName": "Pronoun"
   },
   "options": {
     "draftAndPublish": false
@@ -20,7 +19,6 @@
     "Rank": {
       "type": "integer",
       "required": true,
-      "default": 0,
       "min": 0
     },
     "IsActive": {
