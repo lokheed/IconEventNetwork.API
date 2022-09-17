@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "phone_number_types",
+  "info": {
+    "singularName": "phone-number-type",
+    "pluralName": "phone-number-types",
+    "displayName": "PhoneNumberType"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "Rank": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "AppliesToPerson": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToPersonCompany": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToCompany": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    }
+  }
+}
