@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_address_types",
+  "info": {
+    "singularName": "email-address-type",
+    "pluralName": "email-address-types",
+    "displayName": "EmailAddressType"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Rank": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToPerson": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToPersonCompany": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToCompany": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    }
+  }
+}
