@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "countrysubdivisions",
+  "info": {
+    "singularName": "countrysubdivision",
+    "pluralName": "countrysubdivisions",
+    "displayName": "CountrySubdivision"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "SearchableName": {
+      "type": "string"
+    }
+  }
+}
