@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "countries",
+  "info": {
+    "singularName": "country",
+    "pluralName": "countries",
+    "displayName": "Country",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "A2": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 2,
+      "minLength": 2
+    },
+    "A3": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 3,
+      "minLength": 3
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "Number": {
+      "type": "integer",
+      "min": 0
+    },
+    "SearchableName": {
+      "type": "string",
+      "private": true
+    }
+  }
+}

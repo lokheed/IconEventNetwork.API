@@ -28,4 +28,48 @@ module.exports = ({ env }) => ({
       }
     },
   },
+  'import-export-entries': {
+    enabled: true,
+  },
+  'fuzzy-search': {
+    enabled: true,
+    config: {
+      contentTypes: [
+        {
+          uid: 'api::country.country',
+          modelName: 'country',
+            fuzzysortOptions: {
+              characterLimit: 300,
+              threshold: -600,
+              limit: 10,
+              keys: [
+              {
+                name: "Name",
+                weight: 100,
+              },
+              {
+                name: "SearchableName",
+                weight: 100,
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  slugify: {
+    enabled: true,
+    config: {
+      contentTypes: {
+        country: {
+          field: 'SearchableName',
+          references: 'Name',
+        },
+        countrysubdivision: {
+          field: 'SearchableName',
+          references: 'Name',
+        },
+      },
+    },
+  },
 });
