@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "social_media_types",
+  "info": {
+    "singularName": "social-media-type",
+    "pluralName": "social-media-types",
+    "displayName": "SocialMediaType"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Rank": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToPerson": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToPersonCompany": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "AppliesToCompany": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    }
+  }
+}
