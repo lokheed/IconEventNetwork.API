@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "footer_legal_menus",
+  "info": {
+    "singularName": "footer-legal-menu",
+    "pluralName": "footer-legal-menus",
+    "displayName": "FooterLegalMenu",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MenuItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "menu.menu-link"
+    }
+  }
+}
