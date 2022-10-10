@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_menu_sub_menus",
+  "info": {
+    "displayName": "sub-menu",
+    "icon": "bars",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "DisplayName": {
+      "type": "string",
+      "required": true
+    },
+    "Link": {
+      "type": "string"
+    },
+    "Links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "menu.menu-link"
+    },
+    "SubMenus": {
+      "type": "component",
+      "repeatable": true,
+      "component": "menu.menu-link"
+    },
+    "IsVisibleAnonymous": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}
