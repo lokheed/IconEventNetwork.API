@@ -11,7 +11,7 @@
       "type": "string",
       "required": true
     },
-    "link": {
+    "Link": {
       "type": "string"
     },
     "LinkType": {
