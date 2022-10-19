@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "founding_planners",
+  "info": {
+    "singularName": "founding-planner",
+    "pluralName": "founding-planners",
+    "displayName": "FoundingPlanner"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "LastName": {
+      "type": "string",
+      "required": true
+    },
+    "FirstName": {
+      "type": "string",
+      "required": true
+    },
+    "CompanyName": {
+      "type": "string",
+      "required": true
+    },
+    "Bio": {
+      "type": "richtext"
+    },
+    "Headshot": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "Logo": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "LogoRank": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    }
+  }
+}
