@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leadership_team_members",
+  "info": {
+    "singularName": "leadership-team-member",
+    "pluralName": "leadership-team-members",
+    "displayName": "LeadershipTeamMember",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "FirstName": {
+      "type": "string"
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Bio": {
+      "type": "richtext"
+    },
+    "Headshot": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Rank": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    }
+  }
+}
