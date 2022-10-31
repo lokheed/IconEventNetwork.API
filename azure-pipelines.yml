@@ -1,6 +1,6 @@
 trigger:
   branches:
-    include: [main]
+    include: [develop]
 
 variables:
   projectRoot: '$(Build.SourcesDirectory)'
