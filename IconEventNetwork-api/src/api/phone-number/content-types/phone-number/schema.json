@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "phone_numbers",
+  "info": {
+    "singularName": "phone-number",
+    "pluralName": "phone-numbers",
+    "displayName": "PhoneNumber"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "RawFormat": {
+      "type": "string",
+      "required": true
+    },
+    "IsValidated": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "E164Format": {
+      "type": "string"
+    },
+    "InternationalFormat": {
+      "type": "string"
+    },
+    "NationalFormat": {
+      "type": "string"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::country.country"
+    },
+    "phone_number_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::phone-number-type.phone-number-type"
+    }
+  }
+}
