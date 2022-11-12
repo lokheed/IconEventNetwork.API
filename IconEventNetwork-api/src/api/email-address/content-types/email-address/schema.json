@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "EmailAddress": {
-      "type": "string",
-      "required": true
-    },
     "IsValidated": {
       "type": "boolean",
       "default": false,
@@ -25,6 +21,10 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::email-address-type.email-address-type"
+    },
+    "EmailAddress": {
+      "type": "email",
+      "required": true
     }
   }
 }
