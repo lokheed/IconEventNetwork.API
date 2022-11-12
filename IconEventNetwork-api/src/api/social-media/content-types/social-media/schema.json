@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "social_medias",
+  "info": {
+    "singularName": "social-media",
+    "pluralName": "social-medias",
+    "displayName": "SocialMedia"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string"
+    },
+    "social_media_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::social-media-type.social-media-type"
+    }
+  }
+}
