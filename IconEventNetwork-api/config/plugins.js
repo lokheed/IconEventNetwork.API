@@ -57,19 +57,4 @@ module.exports = ({ env }) => ({
       ],
     },
   },
-  slugify: {
-    enabled: true,
-    config: {
-      contentTypes: {
-        country: {
-          field: 'SearchableName',
-          references: 'Name',
-        },
-        countrysubdivision: {
-          field: 'SearchableName',
-          references: 'Name',
-        },
-      },
-    },
-  },
 });
