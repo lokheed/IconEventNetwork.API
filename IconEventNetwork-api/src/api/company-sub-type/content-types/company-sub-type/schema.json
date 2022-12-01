@@ -4,7 +4,8 @@
   "info": {
     "singularName": "company-sub-type",
     "pluralName": "company-sub-types",
-    "displayName": "CompanySubType"
+    "displayName": "CompanySubType",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -22,10 +23,11 @@
       "required": true,
       "private": true
     },
-    "CompanyType": {
+    "company_type": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::company-type.company-type"
+      "relation": "manyToOne",
+      "target": "api::company-type.company-type",
+      "inversedBy": "company_sub_types"
     }
   }
 }

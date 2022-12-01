@@ -20,6 +20,12 @@
       "default": true,
       "required": true,
       "private": true
+    },
+    "company_sub_types": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company-sub-type.company-sub-type",
+      "mappedBy": "company_type"
     }
   }
 }
