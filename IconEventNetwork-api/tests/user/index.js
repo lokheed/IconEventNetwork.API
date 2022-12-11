@@ -10,7 +10,7 @@ const mockUserData = {
   blocked: null,
 };
 
-it("should login user and return jwt token", async () => {
+it("User: Should login user and return jwt token", async () => {
   /** Creates a new user and save it to the database */
   await strapi.plugins["users-permissions"].services.user.add({
     ...mockUserData,
@@ -31,7 +31,7 @@ it("should login user and return jwt token", async () => {
     });
 });
 
-it('should return users data for authenticated user', async () => {
+it('User: Should return users data for authenticated user', async () => {
   /** Gets the default user role */
   const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 

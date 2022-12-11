@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     
-  async beforeCreate(event) {     
+  async beforeCreate(event) {   
     var countryId = event.params.data.country.connect[0] ? event.params.data.country.connect[0].id : 0;
     if (countryId > 0) {
       const countryCode = await strapi.service('api::country.country').getA2(countryId);
