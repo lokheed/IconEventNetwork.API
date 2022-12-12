@@ -7,9 +7,11 @@ beforeAll(async () => {
   await grantPrivilege(1, {
     "phone-number-type": ["create","update","find","findOne"],
     "country": ["create","update","find","findOne"],
+    "countrysubdivision": ["create","update","find","findOne"],
     "phone-number": ["create","update","find","findOne"],
     "email-address-type": ["create","update","find","findOne"],
     "email-address": ["create","update","find","findOne"],
+    "address-type": ["create","update","find","findOne"],
   });
 });
 
@@ -24,6 +26,8 @@ it("Strapi: Strapi is defined", () => {
 require('./user');
 require('./phone-number-type');
 require('./country');
+require('./countrysubdivision');
 require('./phone-number'); //NOTE: phone-number-type and country are dependencies of phone-number, their tests MUST be run first
 require('./email-address-type');
 require('./email-address'); //NOTE: email-address-type is a dependency of email-address, their tests MUST be run first
+require('./address-type');
