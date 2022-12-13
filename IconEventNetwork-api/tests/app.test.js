@@ -8,6 +8,7 @@ beforeAll(async () => {
     "address": ["create","update","find","findOne"],
     "address-type": ["create","update","find","findOne"],
     "company-status": ["create","update","find","findOne"],
+    "company-sub-type": ["create","update","find","findOne"],
     "company-type": ["create","update","find","findOne"],
     "country": ["create","update","find","findOne"],
     "countrysubdivision": ["create","update","find","findOne"],
@@ -33,6 +34,7 @@ require('./address-type');
 require('./address'); // NOTE: country, countrysubdivision, and address-type are dependencies of address, their tests MUST be run first
 require('./company-status');
 require('./company-type');
+require('./company-sub-type'); // NOTE: company-type is a dependency of company-sub-type, their tests MUST be run first
 require('./email-address-type');
 require('./email-address'); //NOTE: email-address-type is a dependency of email-address, their tests MUST be run first
 require('./phone-number-type');
