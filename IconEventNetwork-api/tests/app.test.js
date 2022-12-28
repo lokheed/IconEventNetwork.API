@@ -14,6 +14,7 @@ beforeAll(async () => {
     "countrysubdivision": ["create","update","find","findOne"],
     "email-address": ["create","update","find","findOne"],
     "email-address-type": ["create","update","find","findOne"],
+    "language": ["create","update","find","findOne"],
     "phone-number": ["create","update","find","findOne"],
     "phone-number-type": ["create","update","find","findOne"],
   });
@@ -37,5 +38,6 @@ require('./company-type');
 require('./company-sub-type'); // NOTE: company-type is a dependency of company-sub-type, their tests MUST be run first
 require('./email-address-type');
 require('./email-address'); //NOTE: email-address-type is a dependency of email-address, their tests MUST be run first
+require('./language');
 require('./phone-number-type');
 require('./phone-number'); //NOTE: phone-number-type and country are dependencies of phone-number, their tests MUST be run first

@@ -2,42 +2,46 @@ const request = require('supertest');
 
 // user mock data
 const mockUserData = {
-    username: "countrytester",
-    email: "countrytester@strapi.com",
+    username: "languagetester",
+    email: "languagetester@strapi.com",
     provider: "local",
     password: "1234abc",
     confirmed: true,
     blocked: null,
   };
 
-it("Country: Should return countries for authenticated user", async () => {
-    strapi.query("api::country.country").create({
+it("Language: Should return languages for authenticated user", async () => {
+    strapi.query("api::language.language").create({
         data: {
-            Name: 'United States of America (the)',
-            A2: 'us',
-            A3: 'usa',
+            EnglishName: 'Arabic',
+            NativeName: 'عربى',
+            A2: 'ar',
+            A3: 'ara',
             IsActive: 1,
-            Number: 840
+            Rank: 2
         },
     });     
-    strapi.query("api::country.country").create({
+    strapi.query("api::language.language").create({
         data: {
-            Name: 'Canada',
-            A2: 'CAjunk',
-            A3: 'CANjunk',
+            EnglishName: 'Afrikaans',
+            NativeName: 'Afrikaans',
+            A2: 'AF',
+            A3: 'AFR',
             IsActive: 1,
-            Number: 124
+            Rank: 0
         },
-    });   
-    strapi.query("api::country.country").create({
+    });     
+    strapi.query("api::language.language").create({
         data: {
-            Name: 'Åland Islands',
-            A2: 'AX',
-            A3: 'ALA',
+            EnglishName: 'Albanian',
+            NativeName: 'Shqipëri',
+            A2: 'sqjunk',
+            A3: 'albjunk',
             IsActive: 1,
-            Number: 248
+            Rank: 1
         },
-    });         
+    });     
+        
   
 
  
@@ -57,7 +61,7 @@ it("Country: Should return countries for authenticated user", async () => {
       });    
       
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/countries?sort=SearchableName")
+    .get("/api/languages?sort=Rank")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)
@@ -66,13 +70,13 @@ it("Country: Should return countries for authenticated user", async () => {
     .then((data) => {
         expect(data.body).toBeDefined();
         expect(data.body.data.length).toBe(3);
-        expect(data.body.data[0].attributes.Name).toBe('Åland Islands');
-        expect(data.body.data[1].attributes.Name).toBe('Canada');
-        expect(data.body.data[2].attributes.Name).toBe('United States of America (the)');
+        expect(data.body.data[0].attributes.EnglishName).toBe('Afrikaans');
+        expect(data.body.data[1].attributes.EnglishName).toBe('Albanian');
+        expect(data.body.data[2].attributes.EnglishName).toBe('Arabic');
     });
 });
 
-it("Country: Should not return countries for anonymous user", async () => {
+it("Language: Should not return languages for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/countries?sort=SearchableName")
     .set('accept', 'application/json')
@@ -81,7 +85,7 @@ it("Country: Should not return countries for anonymous user", async () => {
     .expect(403);
 });
 
-it("Country: Should return singular country for authenticated user", async () => {
+it("Language: Should return singular country for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -90,8 +94,8 @@ it("Country: Should return singular country for authenticated user", async () =>
     /** Creates a new user an push to database */
     const user = await strapi.plugins['users-permissions'].services.user.add({
         ...mockUserData,
-        username: 'countrytester2',
-        email: 'countrytester2@strapi.com',
+        username: 'languagetester2',
+        email: 'languagetester2@strapi.com',
         role,
     });
  
@@ -100,7 +104,7 @@ it("Country: Should return singular country for authenticated user", async () =>
       });    
       
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/countries/1")
+    .get("/api/languages/1")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)
@@ -108,50 +112,50 @@ it("Country: Should return singular country for authenticated user", async () =>
     .expect(200)
     .then((data) => {
         expect(data.body).toBeDefined();
-        expect(data.body.data.attributes.Name).toBe('United States of America (the)');
+        expect(data.body.data.attributes.EnglishName).toBe('Arabic');
     });
 });
 
-it("Country: Should not return singular country for anonymous user", async () => {
+it("Language: Should not return singular language for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/countries/1")
+    .get("/api/languages/1")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
     .expect(403);
 });
 
-it("Country: Should transilterate SearchableName for country with accented characters", async () => {
-    await strapi.query('api::country.country').findOne({
+it("Language: Should transilterate SearchableName for language", async () => {
+    await strapi.query('api::language.language').findOne({
         where: {
-            A2: 'AX',
+            A2: 'af',
         }
     }, [])
     .then((data) => {
-        expect(data.SearchableName).toBe('aland islands');
+        expect(data.SearchableName).toBe('afrikaans');
     });
 });
 
-it("Country: Should enforce A2 and A3 to be uppercase", async () => {
-    await strapi.query('api::country.country').findOne({
+it("Language: Should enforce A2 and A3 to be lowercase", async () => {
+    await strapi.query('api::language.language').findOne({
         where: {
-            A2: 'US',
+            A2: 'af',
         }
     }, [])
     .then((data) => {
-        expect(data.A2).toBe('US');
-        expect(data.A3).toBe('USA');
+        expect(data.A2).toBe('af');
+        expect(data.A3).toBe('afr');
     });
 });
 
-it("Country: Should enforce A2 and A3 to be two and three caracters respectively", async () => {
-    await strapi.query('api::country.country').findOne({
+it("Language: Should enforce A2 and A3 to be two and three caracters respectively", async () => {
+    await strapi.query('api::language.language').findOne({
         where: {
-            A2: 'CA',
+            A2: 'sq',
         }
     }, [])
     .then((data) => {
-        expect(data.A2).toBe('CA');
-        expect(data.A3).toBe('CAN');
+        expect(data.A2).toBe('sq');
+        expect(data.A3).toBe('alb');
     });
 });
