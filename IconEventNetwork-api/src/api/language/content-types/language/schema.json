@@ -26,12 +26,12 @@
     "A2": {
       "type": "string",
       "maxLength": 2,
-      "minLength": 2
+      "minLength": 0
     },
     "A3": {
       "type": "string",
       "maxLength": 3,
-      "minLength": 3
+      "minLength": 0
     },
     "Rank": {
       "type": "integer",
