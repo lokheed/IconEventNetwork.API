@@ -268,7 +268,7 @@ it("Person: Should return the a new empty Person record for a requesting user wi
 
 
 it("Person: Should throw an exception when attempting to create a Person record for a User that already has one.", async () => {
-    expect.assertions(1);
+    expect.assertions(1); // required in case the exception is NOT thrown, having 0 assertions will fail the test
 
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
