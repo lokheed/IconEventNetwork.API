@@ -7,6 +7,7 @@ beforeAll(async () => {
   await grantPrivilege(1, {
     "address": ["create","update","find","findOne"],
     "address-type": ["create","update","find","findOne"],
+    "company": ["create","update","find","findOne"],
     "company-status": ["create","update","find","findOne"],
     "company-sub-type": ["create","update","find","findOne"],
     "company-type": ["create","update","find","findOne"],
@@ -43,3 +44,4 @@ require('./language');
 require('./person');
 require('./phone-number-type');
 require('./phone-number'); //NOTE: phone-number-type and country are dependencies of phone-number, their tests MUST be run first
+require('./company'); //NOTE: address, company-status, company-type, company-sub-type, email-address, phone-number, and social-media are dependencies of company, their tests MUST be run first
