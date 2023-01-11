@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
 };
 
-it("EmailAddress: Should validate a valid new email address and mark it as valid", async () => {
+it("EXTERNALDEPENDENCY-- EmailAddress: Should validate a valid new email address and mark it as valid", async () => {
     const emailAddressTypePersonal = await strapi.query('api::email-address-type.email-address-type').findOne({
         where: {
             Name: 'Personal',
@@ -60,7 +60,7 @@ it("EmailAddress: Should validate a valid new email address and mark it as valid
     });
 });
 
-it("EmailAddress: Should validate an invalid new email address and mark it as invalid", async () => {
+it("EXTERNALDEPENDENCY-- EmailAddress: Should validate an invalid new email address and mark it as invalid", async () => {
   const emailAddressTypePersonal = await strapi.query('api::email-address-type.email-address-type').findOne({
       where: {
           Name: 'Personal',
@@ -111,7 +111,7 @@ it("EmailAddress: Should validate an invalid new email address and mark it as in
   });
 });
 
-it("EmailAddress: Should validate a valid existing email address with a valid new email address and mark it as valid", async () => {
+it("EXTERNALDEPENDENCY-- EmailAddress: Should validate a valid existing email address with a valid new email address and mark it as valid", async () => {
   const emailAddressTypePersonal = await strapi.query('api::email-address-type.email-address-type').findOne({
       where: {
           Name: 'Personal',
@@ -172,7 +172,7 @@ it("EmailAddress: Should validate a valid existing email address with a valid ne
   });
 });
 
-it("EmailAddress: Should validate a valid existing email address with an invalid new email address and mark it as invalid", async () => {
+it("EXTERNALDEPENDENCY-- EmailAddress: Should validate a valid existing email address with an invalid new email address and mark it as invalid", async () => {
   const emailAddressTypePersonal = await strapi.query('api::email-address-type.email-address-type').findOne({
       where: {
           Name: 'Personal',
@@ -233,7 +233,7 @@ it("EmailAddress: Should validate a valid existing email address with an invalid
   });
 });
 
-it("EmailAddress: Should validate an invalid existing email address with a valid new email address and mark it as valid", async () => {
+it("EXTERNALDEPENDENCY-- EmailAddress: Should validate an invalid existing email address with a valid new email address and mark it as valid", async () => {
   const emailAddressTypePersonal = await strapi.query('api::email-address-type.email-address-type').findOne({
       where: {
           Name: 'Personal',

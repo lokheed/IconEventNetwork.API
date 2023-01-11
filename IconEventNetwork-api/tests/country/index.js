@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("Country: Should return countries for authenticated user", async () => {
+it("COMMON-- Country: Should return countries for authenticated user", async () => {
     strapi.query("api::country.country").create({
         data: {
             Name: 'United States of America (the)',
@@ -72,7 +72,7 @@ it("Country: Should return countries for authenticated user", async () => {
     });
 });
 
-it("Country: Should not return countries for anonymous user", async () => {
+it("COMMON-- Country: Should not return countries for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/countries?sort=SearchableName")
     .set('accept', 'application/json')
@@ -81,7 +81,7 @@ it("Country: Should not return countries for anonymous user", async () => {
     .expect(403);
 });
 
-it("Country: Should return singular country for authenticated user", async () => {
+it("COMMON-- Country: Should return singular country for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -112,7 +112,7 @@ it("Country: Should return singular country for authenticated user", async () =>
     });
 });
 
-it("Country: Should not return singular country for anonymous user", async () => {
+it("COMMON-- Country: Should not return singular country for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/countries/1")
     .set('accept', 'application/json')
@@ -121,7 +121,7 @@ it("Country: Should not return singular country for anonymous user", async () =>
     .expect(403);
 });
 
-it("Country: Should transilterate SearchableName for country with accented characters", async () => {
+it("COMMON-- Country: Should transilterate SearchableName for country with accented characters", async () => {
     await strapi.query('api::country.country').findOne({
         where: {
             A2: 'AX',
@@ -132,7 +132,7 @@ it("Country: Should transilterate SearchableName for country with accented chara
     });
 });
 
-it("Country: Should enforce A2 and A3 to be uppercase", async () => {
+it("COMMON-- Country: Should enforce A2 and A3 to be uppercase", async () => {
     await strapi.query('api::country.country').findOne({
         where: {
             A2: 'US',
@@ -144,7 +144,7 @@ it("Country: Should enforce A2 and A3 to be uppercase", async () => {
     });
 });
 
-it("Country: Should enforce A2 and A3 to be two and three caracters respectively", async () => {
+it("COMMON-- Country: Should enforce A2 and A3 to be two and three caracters respectively", async () => {
     await strapi.query('api::country.country').findOne({
         where: {
             A2: 'CA',

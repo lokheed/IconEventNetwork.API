@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("AddressType: Should return address-types for authenticated user", async () => {
+it("COMMON-- AddressType: Should return address-types for authenticated user", async () => {
     // Intentionally create entries out of rank order
      strapi.query("api::address-type.address-type").create({
         data: {
@@ -85,7 +85,7 @@ it("AddressType: Should return address-types for authenticated user", async () =
     });
 });
 
-it("AddressType: Should not return address-types for anonymous user", async () => {
+it("COMMON-- AddressType: Should not return address-types for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/address-types?sort=Rank")
     .set('accept', 'application/json')
@@ -94,7 +94,7 @@ it("AddressType: Should not return address-types for anonymous user", async () =
     .expect(403);
 });
 
-it("AddressType: Should return singular email-address-type for authenticated user", async () => {
+it("COMMON-- AddressType: Should return singular email-address-type for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -125,7 +125,7 @@ it("AddressType: Should return singular email-address-type for authenticated use
     });
 });
 
-it("AddressType: Should not return singular email-address-type for anonymous user", async () => {
+it("COMMON-- AddressType: Should not return singular email-address-type for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/address-types/1")
     .set('accept', 'application/json')

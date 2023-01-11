@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("CompanySubType: Should return all company-sub-types for authenticated user", async () => {
+it("COMMON-- CompanySubType: Should return all company-sub-types for authenticated user", async () => {
     const companyTypePlanner = await strapi.query('api::company-type.company-type').findOne({
         where: {
             DisplayName: 'Planner',
@@ -94,7 +94,7 @@ it("CompanySubType: Should return all company-sub-types for authenticated user",
     });
 });
 
-it("CompanySubType: Should return correct company-sub-types by company-type for authenticated user", async () => {
+it("COMMON-- CompanySubType: Should return correct company-sub-types by company-type for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -128,7 +128,7 @@ it("CompanySubType: Should return correct company-sub-types by company-type for 
     });    
 });
 
-it("CompanySubType: Should not return company-sub-types for anonymous user", async () => {
+it("COMMON-- CompanySubType: Should not return company-sub-types for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/company-sub-types?sort=DisplayName")
     .set('accept', 'application/json')
@@ -137,7 +137,7 @@ it("CompanySubType: Should not return company-sub-types for anonymous user", asy
     .expect(403);
 });
 
-it("CompanySubType: Should return singular company-sub-type for authenticated user", async () => {
+it("COMMON-- CompanySubType: Should return singular company-sub-type for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -168,7 +168,7 @@ it("CompanySubType: Should return singular company-sub-type for authenticated us
     });
 });
 
-it("CompanySubType: Should not return singular company-sub-type for anonymous user", async () => {
+it("COMMON-- CompanySubType: Should not return singular company-sub-type for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/company-sub-types/1")
     .set('accept', 'application/json')

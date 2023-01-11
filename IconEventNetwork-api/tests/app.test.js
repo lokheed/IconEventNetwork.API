@@ -25,7 +25,7 @@ afterAll(async () => {
   await cleanupStrapi();
 });
 
-it("Strapi: Strapi is defined", () => {
+it("COMMON-- Strapi: Strapi is defined", () => {
   expect(strapi).toBeDefined();
 });
 

@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("CountrySubdivision: Should return country subdivisions by country for authenticated user", async () => {
+it("COMMON-- CountrySubdivision: Should return country subdivisions by country for authenticated user", async () => {
     strapi.query("api::countrysubdivision.countrysubdivision").create({
         data: {
             Name: 'Alaska',
@@ -94,7 +94,7 @@ it("CountrySubdivision: Should return country subdivisions by country for authen
     });
 });
 
-it("CountrySubdivision: Should not return country subdivisions for anonymous user", async () => {
+it("COMMON-- CountrySubdivision: Should not return country subdivisions for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/countrysubdivisions?sort=SearchableName")
     .set('accept', 'application/json')
@@ -103,7 +103,7 @@ it("CountrySubdivision: Should not return country subdivisions for anonymous use
     .expect(403);
 });
 
-it("CountrySubdivision: Should return singular country subdivision for authenticated user", async () => {
+it("COMMON-- CountrySubdivision: Should return singular country subdivision for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -134,7 +134,7 @@ it("CountrySubdivision: Should return singular country subdivision for authentic
     });
 });
 
-it("CountrySubdivision: Should not return singular country for anonymous user", async () => {
+it("COMMON-- CountrySubdivision: Should not return singular country for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/countrysubdivisions/1")
     .set('accept', 'application/json')
@@ -143,7 +143,7 @@ it("CountrySubdivision: Should not return singular country for anonymous user", 
     .expect(403);
 });
 
-it("CountrySubdivision: Should transilterate SearchableName for country subdivision with accented characters", async () => {
+it("COMMON-- CountrySubdivision: Should transilterate SearchableName for country subdivision with accented characters", async () => {
     await strapi.query('api::countrysubdivision.countrysubdivision').findOne({
         where: {
             CODE: 'AX-AF',

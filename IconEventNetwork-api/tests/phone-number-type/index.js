@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("PhoneNumberType: Should return phone-number-types for authenticated user", async () => {
+it("COMMON-- PhoneNumberType: Should return phone-number-types for authenticated user", async () => {
     // Intentionally create entries out of rank order
      strapi.query("api::phone-number-type.phone-number-type").create({
         data: {
@@ -74,7 +74,7 @@ it("PhoneNumberType: Should return phone-number-types for authenticated user", a
     });
 });
 
-it("PhoneNumberType: Should not return phone-number-types for anonymous user", async () => {
+it("COMMON-- PhoneNumberType: Should not return phone-number-types for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/phone-number-types?sort=Rank")
     .set('accept', 'application/json')
@@ -83,7 +83,7 @@ it("PhoneNumberType: Should not return phone-number-types for anonymous user", a
     .expect(403);
 });
 
-it("PhoneNumberType: Should return singular phone-number-type for authenticated user", async () => {
+it("COMMON-- PhoneNumberType: Should return singular phone-number-type for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -114,7 +114,7 @@ it("PhoneNumberType: Should return singular phone-number-type for authenticated 
     });
 });
 
-it("PhoneNumberType: Should not return singular phone-number-type for anonymous user", async () => {
+it("COMMON-- PhoneNumberType: Should not return singular phone-number-type for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/phone-number-types/1")
     .set('accept', 'application/json')
