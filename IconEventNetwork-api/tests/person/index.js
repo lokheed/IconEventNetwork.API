@@ -266,7 +266,6 @@ it("Person: Should return the a new empty Person record for a requesting user wi
     });
 });
 
-
 it("Person: Should throw an exception when attempting to create a Person record for a User that already has one.", async () => {
     expect.assertions(1); // required in case the exception is NOT thrown, having 0 assertions will fail the test
 
@@ -314,4 +313,107 @@ it("Person: Should throw an exception when attempting to create a Person record 
     } catch (e) {
         expect(e.toString()).toBe(new ApplicationError('A Person object already exists for this User', {}).toString());
     }
+});
+
+it("Person: A person should be able to successfully update their own Person record", async () => {
+    /** Gets the default user role */
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+
+    /** Creates a new user an push to database */
+    const user = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'persontester7',
+        email: 'persontester7@strapi.com',
+        role,
+    });
+ 
+    const successfulPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Successful',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Successful Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: user.id } ] },
+        },
+    });
+    
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: user.id,
+      });    
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .put("/api/people/" + successfulPerson.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .send({
+        "data": {
+            "MiddleName": "Allowed",
+        }
+    })
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .then((data) => {
+        expect(data.body).toBeDefined();
+        expect(data.body.data.attributes.MiddleName).toBe('Allowed');
+    });
+});
+
+it("Person: A person should not be able to update someone else's Person record", async () => {
+    /** Gets the default user role */
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+
+    /** Creates a new user an push to database */
+    const goodUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'persontester8',
+        email: 'persontester8@strapi.com',
+        role,
+    });
+ 
+    const goodPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Good',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Good Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: goodUser.id } ] },
+        },
+    });
+    
+    const evilUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'persontester9',
+        email: 'persontester9@strapi.com',
+        role,
+    });
+
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: evilUser.id,
+      });    
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .put("/api/people/" + goodPerson.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .send({
+        "data": {
+            "FirstName": "Evil",
+        }
+    })
+    .expect("Content-Type", /json/)
+    .expect(403);
 });

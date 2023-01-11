@@ -41,4 +41,24 @@ module.exports = createCoreService('api::person.person', ({ strapi }) =>  ({
 
         return people.length > 0;
      },
+
+     async canManagePerson(ctx) {
+        const userId = ctx.state.user.id;
+        const personId = ctx.request.params.id;
+        const existingPerson = await strapi.service('api::person.person')
+            .findOne(
+                personId, 
+                {
+                populate: { Users: true },
+                });
+
+        // Check 1: Is this user this person?
+        const isThisPerson = existingPerson.Users.find(({id}) => id === userId);
+        if (isThisPerson) return true;
+
+        // TODO: check if user is Icon admin
+
+        // All checks completed, If none returned true by this point, fall through to false
+        return false;
+    }
 }));
