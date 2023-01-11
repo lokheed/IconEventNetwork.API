@@ -4,7 +4,8 @@
   "info": {
     "singularName": "company",
     "pluralName": "companies",
-    "displayName": "Company"
+    "displayName": "Company",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -72,14 +73,15 @@
       "type": "string"
     },
     "Media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "IsActive": {
       "type": "boolean",
@@ -97,6 +99,16 @@
       "type": "integer",
       "min": 0,
       "default": 0
+    },
+    "AccountManager": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::person.person"
+    },
+    "PrimaryContact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::person.person"
     }
   }
 }

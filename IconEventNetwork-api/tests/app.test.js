@@ -19,6 +19,7 @@ beforeAll(async () => {
     "person": ["create","update","find","findOne","getByRequestingUser"],
     "phone-number": ["create","update","find","findOne"],
     "phone-number-type": ["create","update","find","findOne"],
+    "person-at-company": ["create","update","find","findOne"],
   });
 });
 
@@ -45,3 +46,4 @@ require('./person');
 require('./phone-number-type');
 require('./phone-number'); //NOTE: phone-number-type and country are dependencies of phone-number, their tests MUST be run first
 require('./company'); //NOTE: address, company-status, company-type, company-sub-type, email-address, phone-number, and social-media are dependencies of company, their tests MUST be run first
+require('./person-at-company'); //NOTE: address, company-status, company-type, company-sub-type, email-address, company, person, phone-number, and social-media are dependencies of company, their tests MUST be run first

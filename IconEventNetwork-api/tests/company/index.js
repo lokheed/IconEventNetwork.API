@@ -1,7 +1,3 @@
-const request = require('supertest');
-const utils = require('@strapi/utils');
-const { ApplicationError } = utils.errors;
-
 // user mock data
 const mockUserData = {
     username: "companytester",
@@ -23,7 +19,7 @@ it("COMMON-- Company: Should populate InvoiceCompanyName with 'CompanyName' if I
         },
     });
      
-    expect(someTestCompany.InvoiceCompanyName).toBe('Some Test Company')
+    expect(someTestCompany.InvoiceCompanyName).toBe('Some Test Company');
 });
 
 it("COMMON-- Company: All text fields should be trimmed of white space", async () => {
@@ -39,11 +35,11 @@ it("COMMON-- Company: All text fields should be trimmed of white space", async (
             IsHidden: false,
         },
     });
-    expect(someTestCompany.Name).toBe('Some Test Company')
-    expect(someTestCompany.InvoiceCompanyName).toBe('Some Test Company')
+    expect(someTestCompany.Name).toBe('Some Test Company');
+    expect(someTestCompany.InvoiceCompanyName).toBe('Some Test Company');
     expect(someTestCompany.Tagline).toBe('This is a tagline')
-    expect(someTestCompany.Description).toBe('I would describe Some Test Company as a company.')
-    expect(someTestCompany.Website).toBe('https://SomeTestCompany.com')
+    expect(someTestCompany.Description).toBe('I would describe Some Test Company as a company.');
+    expect(someTestCompany.Website).toBe('https://SomeTestCompany.com');
 });
 
 it("COMMON-- Company: SearchableName should be Name transliterated and lower case", async () => {
@@ -55,5 +51,5 @@ it("COMMON-- Company: SearchableName should be Name transliterated and lower cas
             IsHidden: false,
         },
     });
-    expect(someTestCompany.SearchableName).toBe('renee francois events')
+    expect(someTestCompany.SearchableName).toBe('renee francois events');
 });
