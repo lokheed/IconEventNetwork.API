@@ -46,4 +46,13 @@ module.exports = createCoreController('api::person.person', ({ strapi }) => ({
         });
         ctx.body = { data: person };
     },
+
+    // Extend the core update controller with additional security
+    async update(ctx) {
+        let canManagePerson = await strapi.service('api::person.person').canManagePerson(ctx);
+        if (!canManagePerson) return ctx.forbidden('This user is forbidden to manage this person', {});
+
+        const response = await super.update(ctx);
+        return response;
+    }
 }));
