@@ -12,7 +12,7 @@ const mockUserData = {
     blocked: null,
 };
 
-it("Person: Should not return person for anonymous user", async () => {
+it("COMMON-- Person: Should not return person for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/people/me")
     .set('accept', 'application/json')
@@ -21,7 +21,7 @@ it("Person: Should not return person for anonymous user", async () => {
     .expect(403);
 });
 
-it("Person: Should return the correct Person record for a requesting user with an existing Person record", async () => {
+it("COMMON-- Person: Should return the correct Person record for a requesting user with an existing Person record", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -67,7 +67,7 @@ it("Person: Should return the correct Person record for a requesting user with a
     });
 });
 
-it("Person: Should populate DirectoryName with 'FirstName LastName' if DirectoryName is missing", async () => {
+it("COMMON-- Person: Should populate DirectoryName with 'FirstName LastName' if DirectoryName is missing", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -116,7 +116,7 @@ it("Person: Should populate DirectoryName with 'FirstName LastName' if Directory
     });
 });
 
-it("Person: All text fields should be trimmed of white space", async () => {
+it("COMMON-- Person: All text fields should be trimmed of white space", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -174,7 +174,7 @@ it("Person: All text fields should be trimmed of white space", async () => {
     });
 });
 
-it("Person: SearchableName should be DirectoryName transliterated and lower case", async () => {
+it("COMMON-- Person: SearchableName should be DirectoryName transliterated and lower case", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -222,7 +222,7 @@ it("Person: SearchableName should be DirectoryName transliterated and lower case
     });
 });
 
-it("Person: Should return the a new empty Person record for a requesting user with no existing Person record", async () => {
+it("COMMON-- Person: Should return the a new empty Person record for a requesting user with no existing Person record", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -266,7 +266,7 @@ it("Person: Should return the a new empty Person record for a requesting user wi
     });
 });
 
-it("Person: Should throw an exception when attempting to create a Person record for a User that already has one.", async () => {
+it("COMMON-- Person: Should throw an exception when attempting to create a Person record for a User that already has one.", async () => {
     expect.assertions(1); // required in case the exception is NOT thrown, having 0 assertions will fail the test
 
     /** Gets the default user role */
@@ -315,7 +315,7 @@ it("Person: Should throw an exception when attempting to create a Person record 
     }
 });
 
-it("Person: A person should be able to successfully update their own Person record", async () => {
+it("COMMON-- Person: A person should be able to successfully update their own Person record", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -365,7 +365,7 @@ it("Person: A person should be able to successfully update their own Person reco
     });
 });
 
-it("Person: A person should not be able to update someone else's Person record", async () => {
+it("COMMON-- Person: A person should not be able to update someone else's Person record", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 

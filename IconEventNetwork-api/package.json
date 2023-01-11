@@ -8,7 +8,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit"
+    "test": "jest --forceExit -t=COMMON--",
+    "test-all": "jest --forceExit"
   },
   "dependencies": {
     "@sindresorhus/transliterate": "^1.5.0",

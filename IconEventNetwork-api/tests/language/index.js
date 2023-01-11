@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("Language: Should return languages for authenticated user", async () => {
+it("COMMON-- Language: Should return languages for authenticated user", async () => {
     strapi.query("api::language.language").create({
         data: {
             EnglishName: 'Arabic',
@@ -76,7 +76,7 @@ it("Language: Should return languages for authenticated user", async () => {
     });
 });
 
-it("Language: Should not return languages for anonymous user", async () => {
+it("COMMON-- Language: Should not return languages for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/countries?sort=SearchableName")
     .set('accept', 'application/json')
@@ -85,7 +85,7 @@ it("Language: Should not return languages for anonymous user", async () => {
     .expect(403);
 });
 
-it("Language: Should return singular country for authenticated user", async () => {
+it("COMMON-- Language: Should return singular country for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -116,7 +116,7 @@ it("Language: Should return singular country for authenticated user", async () =
     });
 });
 
-it("Language: Should not return singular language for anonymous user", async () => {
+it("COMMON-- Language: Should not return singular language for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/languages/1")
     .set('accept', 'application/json')
@@ -125,7 +125,7 @@ it("Language: Should not return singular language for anonymous user", async () 
     .expect(403);
 });
 
-it("Language: Should transilterate SearchableName for language", async () => {
+it("COMMON-- Language: Should transilterate SearchableName for language", async () => {
     await strapi.query('api::language.language').findOne({
         where: {
             A2: 'af',
@@ -136,7 +136,7 @@ it("Language: Should transilterate SearchableName for language", async () => {
     });
 });
 
-it("Language: Should enforce A2 and A3 to be lowercase", async () => {
+it("COMMON-- Language: Should enforce A2 and A3 to be lowercase", async () => {
     await strapi.query('api::language.language').findOne({
         where: {
             A2: 'af',
@@ -148,7 +148,7 @@ it("Language: Should enforce A2 and A3 to be lowercase", async () => {
     });
 });
 
-it("Language: Should enforce A2 and A3 to be two and three caracters respectively", async () => {
+it("COMMON-- Language: Should enforce A2 and A3 to be two and three caracters respectively", async () => {
     await strapi.query('api::language.language').findOne({
         where: {
             A2: 'sq',

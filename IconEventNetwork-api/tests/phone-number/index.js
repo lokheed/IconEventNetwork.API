@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
 };
 
-it("PhoneNumber: Should validate a valid new phone number and populate formatted values", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should validate a valid new phone number and populate formatted values", async () => {
     const country = await strapi.query('api::country.country').findOne({
         where: {
             A2: 'US',
@@ -49,7 +49,7 @@ it("PhoneNumber: Should validate a valid new phone number and populate formatted
     expect(validPhoneNumber.NationalFormat).toBe('(833) 540-2304');
 });
 
-it("PhoneNumber: Should validate an invalid new phone number and not populate formatted values", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should validate an invalid new phone number and not populate formatted values", async () => {
   const country = await strapi.query('api::country.country').findOne({
       where: {
           A2: 'US',
@@ -88,7 +88,7 @@ it("PhoneNumber: Should validate an invalid new phone number and not populate fo
   expect(invalidPhoneNumber.NationalFormat).toBe('');
 });
 
-it("PhoneNumber: Should validate a valid existing phone number with a valid new number and populate formatted values", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should validate a valid existing phone number with a valid new number and populate formatted values", async () => {
   const country = await strapi.query('api::country.country').findOne({
       where: {
           A2: 'US',
@@ -142,7 +142,7 @@ it("PhoneNumber: Should validate a valid existing phone number with a valid new 
   expect(updatedPhoneNumber.NationalFormat).toBe('(855) 470-8381');
 });
 
-it("PhoneNumber: Should validate a valid existing phone number with an invalid new number and de-populate formatted values", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should validate a valid existing phone number with an invalid new number and de-populate formatted values", async () => {
   const country = await strapi.query('api::country.country').findOne({
       where: {
           A2: 'US',
@@ -196,7 +196,7 @@ it("PhoneNumber: Should validate a valid existing phone number with an invalid n
   expect(updatedPhoneNumber.NationalFormat).toBe('');
 });
 
-it("PhoneNumber: Should validate an invalid existing phone number with a valid new number and populate formatted values", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should validate an invalid existing phone number with a valid new number and populate formatted values", async () => {
   const country = await strapi.query('api::country.country').findOne({
       where: {
           A2: 'US',
@@ -250,7 +250,7 @@ it("PhoneNumber: Should validate an invalid existing phone number with a valid n
   expect(updatedPhoneNumber.NationalFormat).toBe('(855) 470-8383');
 });
 
-it("PhoneNumber: Should throw an exception when attempting to create a new PhoneNumber with no Country", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should throw an exception when attempting to create a new PhoneNumber with no Country", async () => {
     expect.assertions(3); // required in case the exception is NOT thrown, not having the last assertion will fail the test
   
     const phoneNumberTypeHome = await strapi.query('api::phone-number-type.phone-number-type').findOne({
@@ -278,7 +278,7 @@ it("PhoneNumber: Should throw an exception when attempting to create a new Phone
           
 });
 
-it("PhoneNumber: Should throw an exception when attempting to create a new PhoneNumber with no PhoneNumberType", async () => {
+it("EXTERNALDEPENDENCY-- PhoneNumber: Should throw an exception when attempting to create a new PhoneNumber with no PhoneNumberType", async () => {
     expect.assertions(3); // required in case the exception is NOT thrown, not having the last assertion will fail the test
     
     const country = await strapi.query('api::country.country').findOne({

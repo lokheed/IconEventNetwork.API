@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
   };
 
-it("CompanyType: Should return company-types for authenticated user", async () => {
+it("COMMON-- CompanyType: Should return company-types for authenticated user", async () => {
     // Intentionally create entries out of order
     strapi.query("api::company-type.company-type").create({
         data: {
@@ -69,7 +69,7 @@ it("CompanyType: Should return company-types for authenticated user", async () =
     });
 });
 
-it("CompanyType: Should not return company-types for anonymous user", async () => {
+it("COMMON-- CompanyType: Should not return company-types for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/company-types?sort=DisplayName")
     .set('accept', 'application/json')
@@ -78,7 +78,7 @@ it("CompanyType: Should not return company-types for anonymous user", async () =
     .expect(403);
 });
 
-it("CompanyType: Should return singular company-type for authenticated user", async () => {
+it("COMMON-- CompanyType: Should return singular company-type for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -109,7 +109,7 @@ it("CompanyType: Should return singular company-type for authenticated user", as
     });
 });
 
-it("CompanyType: Should not return singular company-type for anonymous user", async () => {
+it("COMMON-- CompanyType: Should not return singular company-type for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/company-types/1")
     .set('accept', 'application/json')

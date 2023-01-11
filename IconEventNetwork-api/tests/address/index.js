@@ -10,7 +10,7 @@ const mockUserData = {
     blocked: null,
 };
 
-it("Address: Should return addresses for authenticated user", async () => {
+it("COMMON-- Address: Should return addresses for authenticated user", async () => {
     const country = await strapi.query('api::country.country').findOne({
         where: {
             A2: 'US',
@@ -92,7 +92,7 @@ it("Address: Should return addresses for authenticated user", async () => {
     });
 });
 
-it("Address: Should not return addresses for anonymous user", async () => {
+it("COMMON-- Address: Should not return addresses for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/addresses?sort=PostalCode")
     .set('accept', 'application/json')
@@ -101,7 +101,7 @@ it("Address: Should not return addresses for anonymous user", async () => {
     .expect(403);
 });
 
-it("Address: Should return singular address for authenticated user", async () => {
+it("COMMON-- Address: Should return singular address for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -132,7 +132,7 @@ it("Address: Should return singular address for authenticated user", async () =>
     });
 });
 
-it("Address: Should not return singular address for anonymous user", async () => {
+it("COMMON-- Address: Should not return singular address for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
     .get("/api/addresses/1")
     .set('accept', 'application/json')
