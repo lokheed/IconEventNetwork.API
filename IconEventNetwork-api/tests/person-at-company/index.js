@@ -34,7 +34,7 @@ it("COMMON-- PersonAtCompany: All text fields should be trimmed of white space",
         },
     });
 
-    var company = await strapi.query("api::company.company").create({
+    const company = await strapi.query("api::company.company").create({
         data: {
             Name: 'Existing Company',
             InvoiceCompanyName: '',
@@ -44,7 +44,7 @@ it("COMMON-- PersonAtCompany: All text fields should be trimmed of white space",
         },
     });
     
-    var personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+    const personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
         data: {
             Person: { disconnect: [], connect: [ { id: person.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
