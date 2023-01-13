@@ -56,7 +56,7 @@ it("COMMON-- Company: SearchableName should be Name transliterated and lower cas
     expect(someTestCompany.SearchableName).toBe('renee francois events');
 });
 
-it("COMMON-- Company: A user should be able to successfully update a company if their relevent PersonAtCompany record allows CanManageCompanyDetails", async () => {
+it("COMMON-- Company: A user should be able to successfully update a company if their relevent PersonAtCompany record is active and allows CanManageCompanyDetails", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
