@@ -6,6 +6,7 @@ module.exports = {
 
      async beforeUpdate(event) {   
         event = await strapi.service('api::person-at-company.person-at-company').cleanupFields(event); 
+        event = await strapi.service('api::person-at-company.person-at-company').disallowPersonAndCompanyChanges(event);
     },
     
   }

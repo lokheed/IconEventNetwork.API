@@ -57,6 +57,9 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
                             $eq: companyId,
                         }
                     },
+                    IsActive: {
+                        $eq: true,
+                   },
                     CanManageCompanyDetails: {
                         $eq: true,
                     },
