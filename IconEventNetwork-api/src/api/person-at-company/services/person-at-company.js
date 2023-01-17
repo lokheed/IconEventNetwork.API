@@ -267,4 +267,28 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         if (ctx.request.body.data.CanManageCompanyStaff !== undefined) ctx.request.body.data.CanManageCompanyStaff = thisPersonAtCompany.CanManageCompanyStaff;
         return ctx;
      },
+
+     async deactivateAllPersonAtCompanyRecords(personId) {
+        let personsAtCompanies = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+            filters: {
+                Person: {
+                    id: {
+                        $eq: personId,
+                    }
+                },
+                 IsActive: {
+                    $eq: true,
+               },
+            }
+        });
+        if (personsAtCompanies.length > 0) {
+            for (let i = 0; i < personsAtCompanies.length; i++) {
+                strapi.entityService.update('api::person-at-company.person-at-company', personsAtCompanies[i].id, {
+                    data: {
+                      IsActive: false,
+                    },
+                }); 
+            }
+        }
+    }
 }));
