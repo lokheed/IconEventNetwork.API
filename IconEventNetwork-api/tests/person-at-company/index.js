@@ -1654,3 +1654,145 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should not b
    expect(thisPersonAtCompany.CanManageCompanyDetails).toBe(true);
    expect(thisPersonAtCompany.CanManageCompanyStaff).toBe(true);
 });
+
+it("COMMON-- PersonAtCompany: When a Person record is inactivated, all related PersonAtCompany records should automatically be inactivated.", async () => {
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+ 
+    const company = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Existing Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(company.id).toBeDefined();
+    expect(company.id).toBeGreaterThan(0);
+ 
+    /** Creates a new user an push to database */
+    const staffAdminUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester30',
+        email: 'personatcompanytester30@strapi.com',
+        role,
+    });
+    expect(staffAdminUser.id).toBeDefined();
+    expect(staffAdminUser.id).toBeGreaterThan(0);
+ 
+    const staffAdminPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: 'Admin',
+            LastName: 'Person',
+            DirectoryName: 'Staff Admin Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+        },
+    });
+    expect(staffAdminPerson.id).toBeDefined();
+    expect(staffAdminPerson.id).toBeGreaterThan(0);
+ 
+    const staffAdminPersonAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: staffAdminPerson.id } ] },
+            Company: { disconnect: [], connect: [ { id: company.id } ] },
+            JobTitle: 'Staff Admin',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: true,
+            CanManageCompanyStaff: true,
+        },
+    });
+    expect(staffAdminPersonAtCompany.id).toBeDefined();
+    expect(staffAdminPersonAtCompany.id).toBeGreaterThan(0);
+
+    const staffUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester31',
+        email: 'personatcompanytester31@strapi.com',
+        role,
+    });
+    expect(staffUser.id).toBeDefined();
+    expect(staffUser.id).toBeGreaterThan(0);
+ 
+    const staffPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Staff Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+        },
+    });
+    expect(staffPerson.id).toBeDefined();
+    expect(staffPerson.id).toBeGreaterThan(0);
+ 
+    const staffPersonAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: staffPerson.id } ] },
+            Company: { disconnect: [], connect: [ { id: company.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(staffPersonAtCompany.id).toBeDefined();
+    expect(staffPersonAtCompany.id).toBeGreaterThan(0);
+
+    const otherCompany = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Existing Other Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(otherCompany.id).toBeDefined();
+    expect(otherCompany.id).toBeGreaterThan(0);
+
+    const staffPersonAtOtherCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: staffPerson.id } ] },
+            Company: { disconnect: [], connect: [ { id: otherCompany.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(staffPersonAtOtherCompany.id).toBeDefined();
+    expect(staffPersonAtOtherCompany.id).toBeGreaterThan(0);
+
+    const updatedStaffPerson = await strapi.entityService.update('api::person.person', staffPerson.id, {
+        data: {
+            IsActive: false,
+        },
+    });
+    expect(updatedStaffPerson).toBeDefined();
+    expect(updatedStaffPerson.IsActive).toBeDefined();
+    expect(updatedStaffPerson.IsActive).toBe(false);
+    await new Promise((r) => setTimeout(r, 500));
+    const postUpdateStaffPersonAtCompany = await strapi.entityService.findOne('api::person-at-company.person-at-company', staffPersonAtCompany.id, {});
+    expect(postUpdateStaffPersonAtCompany).toBeDefined();
+    expect(postUpdateStaffPersonAtCompany.IsActive).toBeDefined();
+    expect(postUpdateStaffPersonAtCompany.IsActive).toBe(false);
+
+    const postUpdateStaffPersonAtOtherCompany = await strapi.entityService.findOne('api::person-at-company.person-at-company', staffPersonAtOtherCompany.id, {});
+    expect(postUpdateStaffPersonAtOtherCompany).toBeDefined();
+    expect(postUpdateStaffPersonAtOtherCompany.IsActive).toBeDefined();
+    expect(postUpdateStaffPersonAtOtherCompany.IsActive).toBe(false);
+});
