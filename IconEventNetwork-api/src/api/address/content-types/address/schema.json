@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "singularName": "address",
+    "pluralName": "addresses",
+    "displayName": "Address"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Line1": {
+      "type": "string"
+    },
+    "Line2": {
+      "type": "string"
+    },
+    "City": {
+      "type": "string"
+    },
+    "PostalCode": {
+      "type": "string"
+    },
+    "country": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::country.country"
+    },
+    "country_subdivision": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::countrysubdivision.countrysubdivision"
+    },
+    "address_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::address-type.address-type"
+    }
+  }
+}

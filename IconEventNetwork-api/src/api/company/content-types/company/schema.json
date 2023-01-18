@@ -1,0 +1,114 @@
+{
+  "kind": "collectionType",
+  "collectionName": "companies",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "Company",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "SearchableName": {
+      "type": "string"
+    },
+    "InvoiceCompanyName": {
+      "type": "string"
+    },
+    "CompanyStatus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-status.company-status"
+    },
+    "IsHidden": {
+      "type": "boolean",
+      "default": false,
+      "required": true,
+      "private": true
+    },
+    "CompanyType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-type.company-type"
+    },
+    "CompanySubType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-sub-type.company-sub-type"
+    },
+    "Tagline": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "SocialMediaAccounts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::social-media.social-media"
+    },
+    "Addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address"
+    },
+    "PhoneNumbers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::phone-number.phone-number"
+    },
+    "EmailAddresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::email-address.email-address"
+    },
+    "Website": {
+      "type": "string"
+    },
+    "Media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "IsArchived": {
+      "type": "boolean",
+      "default": false,
+      "required": true,
+      "private": true
+    },
+    "ParentCompanyId": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
+    },
+    "AccountManager": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::person.person"
+    },
+    "PrimaryContact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::person.person"
+    }
+  }
+}

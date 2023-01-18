@@ -1,0 +1,99 @@
+{
+  "kind": "collectionType",
+  "collectionName": "people_at_companies",
+  "info": {
+    "singularName": "person-at-company",
+    "pluralName": "people-at-companies",
+    "displayName": "PersonAtCompany",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Person": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::person.person"
+    },
+    "Company": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company.company"
+    },
+    "JobTitle": {
+      "type": "string"
+    },
+    "Tagline": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Website": {
+      "type": "string"
+    },
+    "SocialMediaAccounts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::social-media.social-media"
+    },
+    "Addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address"
+    },
+    "PhoneNumbers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::phone-number.phone-number"
+    },
+    "EmailAddresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::email-address.email-address"
+    },
+    "Media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "IsArchived": {
+      "type": "boolean",
+      "default": false,
+      "required": true,
+      "private": true
+    },
+    "ProfileImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "CanManageCompanyDetails": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "CanManageCompanyStaff": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

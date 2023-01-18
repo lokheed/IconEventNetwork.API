@@ -1,28 +1,32 @@
 {
   "name": "icon-event-network-api",
   "private": true,
-  "version": "0.1.0",
-  "description": "A Strapi application",
+  "version": "1.1.0",
+  "description": "The Icon Network API",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "test": "jest --forceExit -t=COMMON--",
+    "test-all": "jest --forceExit"
   },
   "dependencies": {
     "@sindresorhus/transliterate": "^1.5.0",
-    "@strapi/plugin-documentation": "^4.4.5",
-    "@strapi/plugin-i18n": "4.4.5",
-    "@strapi/plugin-users-permissions": "4.4.5",
-    "@strapi/provider-email-sendgrid": "4.4.5",
-    "@strapi/provider-upload-aws-s3": "4.4.5",
-    "@strapi/strapi": "4.4.5",
+    "@strapi/plugin-documentation": "^4.5.6",
+    "@strapi/plugin-i18n": "4.5.6",
+    "@strapi/plugin-users-permissions": "4.5.6",
+    "@strapi/provider-email-sendgrid": "4.5.6",
+    "@strapi/provider-upload-aws-s3": "4.5.6",
+    "@strapi/strapi": "4.5.6",
     "better-sqlite3": "7.4.6",
+    "node-fetch": "^1.6.3",
     "pg": "^8.8.0",
     "strapi-plugin-fuzzy-search": "^1.9.4",
-    "strapi-plugin-import-export-entries": "^1.14.1",
-    "strapi-plugin-slugify": "^2.2.3",
-    "strapi-provider-email-smtp": "^1.0.3"
+    "strapi-plugin-import-export-entries": "^1.18.0",
+    "strapi-plugin-slugify": "^2.3.1",
+    "strapi-provider-email-smtp": "^1.0.3",
+    "transliteration": "1.6.5"
   },
   "author": {
     "name": "Ron Miles"
@@ -34,5 +38,19 @@
     "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "sqlite3": "^5.1.2",
+    "supertest": "^6.3.2",
+    "ts-jest": "^26.5.6"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ],
+    "testEnvironment": "node"
+  }
 }

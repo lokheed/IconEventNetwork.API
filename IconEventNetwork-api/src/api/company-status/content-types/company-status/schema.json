@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_statuses",
+  "info": {
+    "singularName": "company-status",
+    "pluralName": "company-statuses",
+    "displayName": "CompanyStatus"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "DisplayName": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    }
+  }
+}

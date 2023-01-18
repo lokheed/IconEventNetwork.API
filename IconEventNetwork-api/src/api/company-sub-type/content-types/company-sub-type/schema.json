@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_sub_types",
+  "info": {
+    "singularName": "company-sub-type",
+    "pluralName": "company-sub-types",
+    "displayName": "CompanySubType",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "DisplayName": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "company_type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company-type.company-type",
+      "inversedBy": "company_sub_types"
+    }
+  }
+}

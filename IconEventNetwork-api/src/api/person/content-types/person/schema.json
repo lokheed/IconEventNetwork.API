@@ -1,0 +1,110 @@
+{
+  "kind": "collectionType",
+  "collectionName": "people",
+  "info": {
+    "singularName": "person",
+    "pluralName": "people",
+    "displayName": "Person",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "prefix": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prefix.prefix"
+    },
+    "FirstName": {
+      "type": "string"
+    },
+    "MiddleName": {
+      "type": "string"
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "Suffix": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::suffix.suffix"
+    },
+    "DirectoryName": {
+      "type": "string"
+    },
+    "PreferredName": {
+      "type": "string"
+    },
+    "SearchableName": {
+      "type": "string",
+      "private": true
+    },
+    "Pronoun": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pronoun.pronoun"
+    },
+    "PreferredLanguage": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::language.language"
+    },
+    "LanguagesSpoken": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::language.language"
+    },
+    "Addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address"
+    },
+    "EmailAddresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::email-address.email-address"
+    },
+    "PhoneNumbers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::phone-number.phone-number"
+    },
+    "SocialMediaAccounts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::social-media.social-media"
+    },
+    "IsActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "private": true
+    },
+    "IsArchived": {
+      "type": "boolean",
+      "default": false,
+      "required": true,
+      "private": true
+    },
+    "IsHidden": {
+      "type": "boolean",
+      "default": false,
+      "required": true,
+      "private": true
+    },
+    "Users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "ProfileImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

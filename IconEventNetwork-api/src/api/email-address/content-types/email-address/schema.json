@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_addresses",
+  "info": {
+    "singularName": "email-address",
+    "pluralName": "email-addresses",
+    "displayName": "EmailAddress",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "IsValidated": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "email_address_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::email-address-type.email-address-type"
+    },
+    "EmailAddress": {
+      "type": "email",
+      "required": true
+    }
+  }
+}
