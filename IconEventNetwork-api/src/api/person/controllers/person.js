@@ -11,7 +11,15 @@ module.exports = createCoreController('api::person.person', ({ strapi }) => ({
         const userId = ctx.state.user.id;
         // Find any existing Person records for the requesting user
         const people = await strapi.entityService.findMany('api::person.person', {
-            populate: ['Users'],
+            fields: ['FirstName', 'MiddleName', 'LastName', 'DirectoryName', 'PreferredName'],
+            populate: {
+                Users: {
+                    fields: ['username', 'email']
+                },
+                ProfileImage: {
+                    fields: ['formats']
+                }
+            },
             filters: {
                 Users: {
                     id: userId,
