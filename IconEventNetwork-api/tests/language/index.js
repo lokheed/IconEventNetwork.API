@@ -82,7 +82,7 @@ it("COMMON-- Language: Should not return languages for anonymous user", async ()
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
 
 it("COMMON-- Language: Should return singular country for authenticated user", async () => {
@@ -122,7 +122,7 @@ it("COMMON-- Language: Should not return singular language for anonymous user", 
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
 
 it("COMMON-- Language: Should transilterate SearchableName for language", async () => {

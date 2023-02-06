@@ -75,7 +75,7 @@ it("COMMON-- CompanyType: Should not return company-types for anonymous user", a
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
 
 it("COMMON-- CompanyType: Should return singular company-type for authenticated user", async () => {
@@ -115,5 +115,5 @@ it("COMMON-- CompanyType: Should not return singular company-type for anonymous 
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });

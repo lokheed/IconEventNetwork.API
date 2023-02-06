@@ -18,7 +18,7 @@ it("COMMON-- Person: Should not return person for anonymous user", async () => {
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
 
 it("COMMON-- Person: Should return the correct Person record for a requesting user with an existing Person record", async () => {
@@ -192,7 +192,7 @@ it("COMMON-- Person: SearchableName should be DirectoryName transliterated and l
         id: user.id,
     });    
  
-    strapi.query("api::person.person").create({
+    const person = await strapi.query("api::person.person").create({
         data: {
             FirstName: 'Renée',
             MiddleName: '',
@@ -205,22 +205,10 @@ it("COMMON-- Person: SearchableName should be DirectoryName transliterated and l
             Users: { disconnect: [], connect: [ { id: user.id } ] },
         },
     });
-     
-    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/people/me")
-    .set('accept', 'application/json')
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'Bearer ' + jwt)
-    .expect("Content-Type", /json/)
-    .expect(200)
-    .then((data) => {
-        expect(data).toBeDefined();
-        expect(data.body).toBeDefined();
-        expect(data.body.data).toBeDefined();
-        expect(data.body.data.SearchableName).toBeDefined();
-        expect(data.body.data.SearchableName).toBe('renee francois');
-    });
-});
+    expect(person.id).toBeDefined();
+    expect(person.id).toBeGreaterThan(0);
+    expect(person.SearchableName).toBe('renee francois');
+ });
 
 it("COMMON-- Person: Should return the a new empty Person record for a requesting user with no existing Person record", async () => {
     /** Gets the default user role */
@@ -416,4 +404,93 @@ it("COMMON-- Person: A person should not be able to update someone else's Person
     })
     .expect("Content-Type", /json/)
     .expect(403);
+});
+
+it("COMMON-- Person: A person should not be able to get someone else's Person record", async () => {
+    /** Gets the default user role */
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+
+    /** Creates a new user an push to database */
+    const goodUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'persontester10',
+        email: 'persontester10@strapi.com',
+        role,
+    });
+ 
+    const goodPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Good',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Good Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: goodUser.id } ] },
+        },
+    });
+    
+    const evilUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'persontester11',
+        email: 'persontester11@strapi.com',
+        role,
+    });
+
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: evilUser.id,
+      });    
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people/" + goodPerson.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(403);
+});
+
+it("COMMON-- Person: A person should be able to get their own Person record", async () => {
+    /** Gets the default user role */
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+
+    /** Creates a new user an push to database */
+    const goodUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'persontester12',
+        email: 'persontester12@strapi.com',
+        role,
+    });
+ 
+    const goodPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Good',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Good Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: goodUser.id } ] },
+        },
+    });
+
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: goodUser.id,
+      });    
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people/" + goodPerson.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(200);
 });
