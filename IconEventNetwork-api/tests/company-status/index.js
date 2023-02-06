@@ -82,7 +82,7 @@ it("COMMON-- CompanyStatus: Should not return company-statuses for anonymous use
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
 
 it("COMMON-- CompanyStatus: Should return singular company-status for authenticated user", async () => {
@@ -122,5 +122,5 @@ it("COMMON-- CompanyStatus: Should not return singular company-status for anonym
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });

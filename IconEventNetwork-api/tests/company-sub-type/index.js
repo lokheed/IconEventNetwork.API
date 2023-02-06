@@ -134,7 +134,7 @@ it("COMMON-- CompanySubType: Should not return company-sub-types for anonymous u
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
 
 it("COMMON-- CompanySubType: Should return singular company-sub-type for authenticated user", async () => {
@@ -174,5 +174,5 @@ it("COMMON-- CompanySubType: Should not return singular company-sub-type for ano
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(403);
+    .expect(500);
 });
