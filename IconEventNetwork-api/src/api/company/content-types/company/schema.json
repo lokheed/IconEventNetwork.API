@@ -109,6 +109,13 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::person.person"
+    },
+    "LogoImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
