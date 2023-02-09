@@ -32,16 +32,22 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         const thisPersonAtCompany = await strapi.entityService.findOne('api::person-at-company.person-at-company', personAtCompanyId, {
             populate: { Person: true, Company: true },
         });
+
+        if (!thisPersonAtCompany) return false;
      
         // Check 1: Is this user this PersonAtCompany?
         const person = await strapi.entityService.findOne('api::person.person', thisPersonAtCompany.Person.id, {
             populate: { Users: true },
         });
+
+        if (!person) return false;
+
         person.Users.forEach(function(user) {
             if (user.id === userId) {
                 canManage = true;
             }
         });
+
 
         // Check 2: Does this user have canManageCompanyStaff rights for this company?
         const people = await strapi.entityService.findMany('api::person.person', {
@@ -112,6 +118,8 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
             populate: { Person: true, Company: true },
         });
 
+        if (!thisPersonAtCompany) return false;
+
         // Check 1: Does this user have canManageCompanyStaff rights for this company?
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
@@ -175,6 +183,8 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         const thisPersonAtCompany = await strapi.entityService.findOne('api::person-at-company.person-at-company', personAtCompanyId, {
             populate: { Person: true, Company: true },
         });
+
+        if (!thisPersonAtCompany) return false;
 
         // Check 1: Does this user have canManageCompanyStaff rights for this company, and this record is not their own?
         const people = await strapi.entityService.findMany('api::person.person', {
