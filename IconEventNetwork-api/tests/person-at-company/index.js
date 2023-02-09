@@ -1796,3 +1796,150 @@ it("COMMON-- PersonAtCompany: When a Person record is inactivated, all related P
     expect(postUpdateStaffPersonAtOtherCompany.IsActive).toBeDefined();
     expect(postUpdateStaffPersonAtOtherCompany.IsActive).toBe(false);
 });
+
+it("COMMON-- PersonAtCompany: A Person should be able to view their own PersonAtCompany", async () => {
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+ 
+    const company = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Existing Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(company.id).toBeDefined();
+    expect(company.id).toBeGreaterThan(0);
+
+    const user = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester32',
+        email: 'personatcompanytester32@strapi.com',
+        role,
+    });
+    expect(user.id).toBeDefined();
+    expect(user.id).toBeGreaterThan(0);
+ 
+    const person = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Staff Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: user.id } ] },
+        },
+    });
+    expect(person.id).toBeDefined();
+    expect(person.id).toBeGreaterThan(0);
+ 
+    const personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: person.id } ] },
+            Company: { disconnect: [], connect: [ { id: company.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(personAtCompany.id).toBeDefined();
+    expect(personAtCompany.id).toBeGreaterThan(0);
+   
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: user.id,
+    });
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people-at-companies/security/" + personAtCompany.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(200)    
+});
+
+it("COMMON-- PersonAtCompany: A Person should not be able to view someone else's PersonAtCompany", async () => {
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+ 
+    const company = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Existing Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(company.id).toBeDefined();
+    expect(company.id).toBeGreaterThan(0);
+
+    const user = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester33',
+        email: 'personatcompanytester33@strapi.com',
+        role,
+    });
+    expect(user.id).toBeDefined();
+    expect(user.id).toBeGreaterThan(0);
+ 
+    const person = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Staff Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: user.id } ] },
+        },
+    });
+    expect(person.id).toBeDefined();
+    expect(person.id).toBeGreaterThan(0);
+ 
+    const personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: person.id } ] },
+            Company: { disconnect: [], connect: [ { id: company.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(personAtCompany.id).toBeDefined();
+    expect(personAtCompany.id).toBeGreaterThan(0);
+ 
+    const evilUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester34',
+        email: 'personatcompanytester34@strapi.com',
+        role,
+    });
+    expect(evilUser.id).toBeDefined();
+    expect(evilUser.id).toBeGreaterThan(0);
+  
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: evilUser.id,
+    });
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people-at-companies/security/" + personAtCompany.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(403)    
+});

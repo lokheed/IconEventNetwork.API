@@ -17,7 +17,7 @@ beforeAll(async () => {
     "email-address-type": ["create","update","find","findOne"],
     "language": ["create","update","find","findOne"],
     "person": ["create","update","find","findOne","getByRequestingUser"],
-    "person-at-company": ["create","update","find","findOne"],
+    "person-at-company": ["create","update","find","findOne","canManagePersonAtCompany"],
     "phone-number": ["create","update","find","findOne"],
     "phone-number-type": ["create","update","find","findOne"],
   });
