@@ -73,5 +73,48 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
 
         // All checks completed, If none returned true by this point, fall through to false
         return false;
+    },
+
+    async canViewCompanyDetails(ctx) {
+        const userId = ctx.state.user.id;
+        const companyId = ctx.request.params.id;
+
+        // Check 1: Does this user have a PersonAtCompany record with CanManageCompanyDetails set to true?
+        const people = await strapi.entityService.findMany('api::person.person', {
+            filters: {
+                Users: {
+                    id: {
+                        $eq: userId,
+                    },
+                }
+            },
+        });
+        if (people.length > 0) {
+            let person = people[0]; // A user should only ever have 1 Person record.
+            let personsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+                filters: {
+                    Person: {
+                        id: {
+                            $eq: person.id,
+                        }
+                    },
+                    Company: {
+                        id: {
+                            $eq: companyId,
+                        }
+                    },
+                    IsActive: {
+                        $eq: true,
+                   },
+                }
+            });
+            if (personsAtCompany.length > 0) return true;
+        }
+
+ 
+        // TODO: check if user is Icon admin
+
+        // All checks completed, If none returned true by this point, fall through to false
+        return false;
     }
 }));
