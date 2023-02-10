@@ -55,9 +55,7 @@ it("COMMON-- PersonAtCompany: All text fields should be trimmed of white space."
             Person: { disconnect: [], connect: [ { id: person.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Head of Stuff             ',
-            Tagline: '     This is a tagline           ',
-            Description: ' I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com ',
+            Bio: ' I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -68,9 +66,7 @@ it("COMMON-- PersonAtCompany: All text fields should be trimmed of white space."
     expect(personAtCompany.id).toBeDefined();
     expect(personAtCompany.id).toBeGreaterThan(0);
     expect(personAtCompany.JobTitle).toBe('Head of Stuff');
-    expect(personAtCompany.Tagline).toBe('This is a tagline');
-    expect(personAtCompany.Description).toBe('I would describe this person as a person.');
-    expect(personAtCompany.Website).toBe('https://SomeProfessionalWebsite.com');
+    expect(personAtCompany.Bio).toBe('I would describe this person as a person.');
 });
 
 it("COMMON-- PersonAtCompany: A user should never be able to change Person once the record is created.", async () => {
@@ -147,9 +143,7 @@ it("COMMON-- PersonAtCompany: A user should never be able to change Person once 
             Person: { disconnect: [], connect: [ { id: person.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Head of Stuff             ',
-            Tagline: '     This is a tagline           ',
-            Description: ' I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com ',
+            Bio: ' I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -234,9 +228,7 @@ it("COMMON-- PersonAtCompany: A user should never be able to change Company once
             Person: { disconnect: [], connect: [ { id: person.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Head of Stuff             ',
-            Tagline: '     This is a tagline           ',
-            Description: ' I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com ',
+            Bio: ' I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -309,9 +301,7 @@ it("COMMON-- PersonAtCompany: A user should be able to modify the profile fields
             Person: { disconnect: [], connect: [ { id: person.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Head of Stuff',
-            Tagline: 'This is a tagline',
-            Description: 'I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com',
+            Bio: 'I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -333,9 +323,7 @@ it("COMMON-- PersonAtCompany: A user should be able to modify the profile fields
     .send({
         "data": {
             "JobTitle": "Head of Other Stuff",
-            "Tagline": "This is a different tagline",
-            "Description": "I would describe this person as a different person.",
-            "Website": "https://SomeOtherProfessionalWebsite.com",
+            "Bio": "I would describe this person as a different person.",
         }
     })
     .expect("Content-Type", /json/)
@@ -343,9 +331,7 @@ it("COMMON-- PersonAtCompany: A user should be able to modify the profile fields
     .then((data) => {
         expect(data.body).toBeDefined();
         expect(data.body.data.attributes.JobTitle).toBe('Head of Other Stuff');
-        expect(data.body.data.attributes.Tagline).toBe('This is a different tagline');
-        expect(data.body.data.attributes.Description).toBe('I would describe this person as a different person.');
-        expect(data.body.data.attributes.Website).toBe('https://SomeOtherProfessionalWebsite.com');
+        expect(data.body.data.attributes.Bio).toBe('I would describe this person as a different person.');
     });    
 });
 
@@ -776,9 +762,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the profile fi
             Person: { disconnect: [], connect: [ { id: staffPerson.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Staff',
-            Tagline: 'This is a tagline',
-            Description: 'I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com',
+            Bio: 'I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -800,9 +784,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the profile fi
     .send({
         "data": {
             "JobTitle": "Other Staff",
-            "Tagline": "This is a different tagline",
-            "Description": "I would describe this person as a different person.",
-            "Website": "https://SomeOtherProfessionalWebsite.com",
+            "Bio": "I would describe this person as a different person.",
         }
     })
     .expect("Content-Type", /json/)
@@ -810,9 +792,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the profile fi
     .then((data) => {
         expect(data.body).toBeDefined();
         expect(data.body.data.attributes.JobTitle).toBe('Staff');
-        expect(data.body.data.attributes.Tagline).toBe('This is a tagline');
-        expect(data.body.data.attributes.Description).toBe('I would describe this person as a person.');
-        expect(data.body.data.attributes.Website).toBe('https://SomeProfessionalWebsite.com');
+        expect(data.body.data.attributes.Bio).toBe('I would describe this person as a person.');
     });    
 });
 
@@ -865,9 +845,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the IsActive o
             Person: { disconnect: [], connect: [ { id: person.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Head of Stuff',
-            Tagline: 'This is a tagline',
-            Description: 'I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com',
+            Bio: 'I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -1201,9 +1179,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the IsActive a
             Person: { disconnect: [], connect: [ { id: staffPerson.id } ] },
             Company: { disconnect: [], connect: [ { id: company.id } ] },
             JobTitle: 'Staff',
-            Tagline: 'This is a tagline',
-            Description: 'I would describe this person as a person.',
-            Website: 'https://SomeProfessionalWebsite.com',
+            Bio: 'I would describe this person as a person.',
             IsActive: true,
             IsArchived: false,
             CanManageCompanyDetails: false,
@@ -1295,9 +1271,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the CanManageC
            Person: { disconnect: [], connect: [ { id: staffPerson.id } ] },
            Company: { disconnect: [], connect: [ { id: company.id } ] },
            JobTitle: 'Staff',
-           Tagline: 'This is a tagline',
-           Description: 'I would describe this person as a person.',
-           Website: 'https://SomeProfessionalWebsite.com',
+           Bio: 'I would describe this person as a person.',
            IsActive: true,
            IsArchived: false,
            CanManageCompanyDetails: false,
