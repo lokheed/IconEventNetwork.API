@@ -10,9 +10,7 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
     async cleanupFields(event) {
          // Trim up text fields
          if (event.params.data.JobTitle)  event.params.data.JobTitle = event.params.data.JobTitle.trim();
-         if (event.params.data.Tagline)  event.params.data.Tagline = event.params.data.Tagline.trim();
-         if (event.params.data.Description)  event.params.data.Description = event.params.data.Description.trim();
-         if (event.params.data.Website)  event.params.data.Website = event.params.data.Website.trim();
+         if (event.params.data.Bio)  event.params.data.Bio = event.params.data.Bio.trim();
 
          return event;
      },
@@ -96,9 +94,7 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         const personAtCompanyId = ctx.request.params.id;
         const thisPersonAtCompany = await strapi.entityService.findOne('api::person-at-company.person-at-company', personAtCompanyId, {});
         if (ctx.request.body.data?.JobTitle) ctx.request.body.data.JobTitle = thisPersonAtCompany.JobTitle;
-        if (ctx.request.body.data?.Tagline) ctx.request.body.data.Tagline = thisPersonAtCompany.Tagline;
-        if (ctx.request.body.data?.Description) ctx.request.body.data.Description = thisPersonAtCompany.Description;
-        if (ctx.request.body.data?.Website) ctx.request.body.data.Website = thisPersonAtCompany.Website;
+        if (ctx.request.body.data?.Bio) ctx.request.body.data.Bio = thisPersonAtCompany.Bio;
         if (ctx.request.body.data?.SocialMediaAccounts?.disconnect) ctx.request.body.data.SocialMediaAccounts.disconnect = [];
         if (ctx.request.body.data?.SocialMediaAccounts?.connect) ctx.request.body.data.SocialMediaAccounts.connect = [];
         if (ctx.request.body.data?.Addresses?.disconnect) ctx.request.body.data.Addresses.disconnect = [];
