@@ -25,14 +25,8 @@
     "JobTitle": {
       "type": "string"
     },
-    "Tagline": {
-      "type": "string"
-    },
-    "Description": {
+    "Bio": {
       "type": "text"
-    },
-    "Website": {
-      "type": "string"
     },
     "SocialMediaAccounts": {
       "type": "relation",
@@ -53,17 +47,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::email-address.email-address"
-    },
-    "Media": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
     },
     "IsActive": {
       "type": "boolean",
