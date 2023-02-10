@@ -7,7 +7,7 @@ beforeAll(async () => {
   await grantPrivilege(1, {
     "address": ["create","update","find","findOne"],
     "address-type": ["create","update","find","findOne"],
-    "company": ["create","update","find","findOne"],
+    "company": ["create","update","find","findOne","canManageCompany"],
     "company-status": ["create","update","find","findOne"],
     "company-sub-type": ["create","update","find","findOne"],
     "company-type": ["create","update","find","findOne"],
