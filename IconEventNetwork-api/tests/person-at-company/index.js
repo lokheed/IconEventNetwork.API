@@ -1904,6 +1904,22 @@ it("COMMON-- PersonAtCompany: A Person should not be able to view someone else's
     });
     expect(evilUser.id).toBeDefined();
     expect(evilUser.id).toBeGreaterThan(0);
+ 
+    const evilPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Evil',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Evil Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: evilUser.id } ] },
+        },
+    });
+    expect(evilPerson.id).toBeDefined();
+    expect(evilPerson.id).toBeGreaterThan(0);
   
     const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
         id: evilUser.id,
@@ -1916,4 +1932,400 @@ it("COMMON-- PersonAtCompany: A Person should not be able to view someone else's
     .set('Authorization', 'Bearer ' + jwt)
     .expect("Content-Type", /json/)
     .expect(403)    
+});
+
+it("COMMON-- PersonAtCompany: A Person should be able to view someone else's PersonAtCompany from their own company", async () => {
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+ 
+    const company = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Existing Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(company.id).toBeDefined();
+    expect(company.id).toBeGreaterThan(0);
+
+    const user = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester35',
+        email: 'personatcompanytester35@strapi.com',
+        role,
+    });
+    expect(user.id).toBeDefined();
+    expect(user.id).toBeGreaterThan(0);
+ 
+    const person = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Staff Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: user.id } ] },
+        },
+    });
+    expect(person.id).toBeDefined();
+    expect(person.id).toBeGreaterThan(0);
+ 
+    const personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: person.id } ] },
+            Company: { disconnect: [], connect: [ { id: company.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(personAtCompany.id).toBeDefined();
+    expect(personAtCompany.id).toBeGreaterThan(0);
+ 
+    const coworkerUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester36',
+        email: 'personatcompanytester36@strapi.com',
+        role,
+    });
+    expect(coworkerUser.id).toBeDefined();
+    expect(coworkerUser.id).toBeGreaterThan(0);
+ 
+    const coworkerPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Coworker',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Coworker Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: coworkerUser.id } ] },
+        },
+    });
+    expect(coworkerPerson.id).toBeDefined();
+    expect(coworkerPerson.id).toBeGreaterThan(0);
+ 
+    const coworkerPersonAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: coworkerPerson.id } ] },
+            Company: { disconnect: [], connect: [ { id: company.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(coworkerPersonAtCompany.id).toBeDefined();
+    expect(coworkerPersonAtCompany.id).toBeGreaterThan(0);
+  
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: user.id,
+    });
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people-at-companies/security/" + coworkerPersonAtCompany.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .then((data) => {
+        expect(data.body).toBeDefined();
+        expect(data.body.canManageProfileFields).toBeDefined();
+        expect(data.body.canManageProfileFields).toBe(false);
+        expect(data.body.canManageActiveArchiveFlags).toBeDefined();
+        expect(data.body.canManageActiveArchiveFlags).toBe(false);
+        expect(data.body.canManageCompanyDetailsAndStaffFlags).toBeDefined();
+        expect(data.body.canManageCompanyDetailsAndStaffFlags).toBe(false);
+        expect(data.body.canViewPersonAtCompany).toBeDefined();
+        expect(data.body.canViewPersonAtCompany).toBe(true);
+    });        
+});
+
+it("COMMON-- PersonAtCompany: A Person should be able to view someone else's PersonAtCompany from their parent company", async () => {
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+ 
+    const parentCompany = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Parent Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(parentCompany.id).toBeDefined();
+    expect(parentCompany.id).toBeGreaterThan(0);
+ 
+    const childCompany = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Child Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            ParentCompanyId: parentCompany.id,
+        },
+    });
+    expect(childCompany.id).toBeDefined();
+    expect(childCompany.id).toBeGreaterThan(0);
+
+    const user = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester37',
+        email: 'personatcompanytester37@strapi.com',
+        role,
+    });
+    expect(user.id).toBeDefined();
+    expect(user.id).toBeGreaterThan(0);
+ 
+    const person = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Staff Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: user.id } ] },
+        },
+    });
+    expect(person.id).toBeDefined();
+    expect(person.id).toBeGreaterThan(0);
+ 
+    const personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: person.id } ] },
+            Company: { disconnect: [], connect: [ { id: childCompany.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(personAtCompany.id).toBeDefined();
+    expect(personAtCompany.id).toBeGreaterThan(0);
+ 
+    const parentCompanyUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester38',
+        email: 'personatcompanytester38@strapi.com',
+        role,
+    });
+    expect(parentCompanyUser.id).toBeDefined();
+    expect(parentCompanyUser.id).toBeGreaterThan(0);
+ 
+    const parentCompanyPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Coworker',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Coworker Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: parentCompanyUser.id } ] },
+        },
+    });
+    expect(parentCompanyPerson.id).toBeDefined();
+    expect(parentCompanyPerson.id).toBeGreaterThan(0);
+ 
+    const parentCompanyPersonAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: parentCompanyPerson.id } ] },
+            Company: { disconnect: [], connect: [ { id: parentCompany.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(parentCompanyPersonAtCompany.id).toBeDefined();
+    expect(parentCompanyPersonAtCompany.id).toBeGreaterThan(0);
+  
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: user.id,
+    });
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people-at-companies/security/" + parentCompanyPersonAtCompany.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .then((data) => {
+        expect(data.body).toBeDefined();
+        expect(data.body.canManageProfileFields).toBeDefined();
+        expect(data.body.canManageProfileFields).toBe(false);
+        expect(data.body.canManageActiveArchiveFlags).toBeDefined();
+        expect(data.body.canManageActiveArchiveFlags).toBe(false);
+        expect(data.body.canManageCompanyDetailsAndStaffFlags).toBeDefined();
+        expect(data.body.canManageCompanyDetailsAndStaffFlags).toBe(false);
+        expect(data.body.canViewPersonAtCompany).toBeDefined();
+        expect(data.body.canViewPersonAtCompany).toBe(true);
+    });        
+});
+
+it("COMMON-- PersonAtCompany: A Person should be able to view someone else's PersonAtCompany from a sibling company", async () => {
+    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
+
+    const role = defaultRole ? defaultRole.id : null;
+ 
+    const parentCompany = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Parent Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+        },
+    });
+    expect(parentCompany.id).toBeDefined();
+    expect(parentCompany.id).toBeGreaterThan(0);
+ 
+    const childCompany = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Child Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            ParentCompanyId: parentCompany.id,
+        },
+    });
+    expect(childCompany.id).toBeDefined();
+    expect(childCompany.id).toBeGreaterThan(0);
+
+    const siblingCompany = await strapi.query("api::company.company").create({
+        data: {
+            Name: 'Sibling Company',
+            InvoiceCompanyName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            ParentCompanyId: parentCompany.id,
+        },
+    });
+    expect(siblingCompany.id).toBeDefined();
+    expect(siblingCompany.id).toBeGreaterThan(0);
+
+    const user = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester39',
+        email: 'personatcompanytester39@strapi.com',
+        role,
+    });
+    expect(user.id).toBeDefined();
+    expect(user.id).toBeGreaterThan(0);
+ 
+    const person = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Staff',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Staff Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: user.id } ] },
+        },
+    });
+    expect(person.id).toBeDefined();
+    expect(person.id).toBeGreaterThan(0);
+ 
+    const personAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: person.id } ] },
+            Company: { disconnect: [], connect: [ { id: childCompany.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(personAtCompany.id).toBeDefined();
+    expect(personAtCompany.id).toBeGreaterThan(0);
+ 
+    const siblingCompanyUser = await strapi.plugins['users-permissions'].services.user.add({
+        ...mockUserData,
+        username: 'personatcompanytester40',
+        email: 'personatcompanytester40@strapi.com',
+        role,
+    });
+    expect(siblingCompanyUser.id).toBeDefined();
+    expect(siblingCompanyUser.id).toBeGreaterThan(0);
+ 
+    const siblingCompanyPerson = await strapi.query("api::person.person").create({
+        data: {
+            FirstName: 'Coworker',
+            MiddleName: '',
+            LastName: 'Person',
+            DirectoryName: 'Coworker Person',
+            SearchableName: '',
+            IsActive: true,
+            IsArchived: false,
+            IsHidden: false,
+            Users: { disconnect: [], connect: [ { id: siblingCompanyUser.id } ] },
+        },
+    });
+    expect(siblingCompanyPerson.id).toBeDefined();
+    expect(siblingCompanyPerson.id).toBeGreaterThan(0);
+ 
+    const siblingCompanyPersonAtCompany = await strapi.query("api::person-at-company.person-at-company").create({
+        data: {
+            Person: { disconnect: [], connect: [ { id: siblingCompanyPerson.id } ] },
+            Company: { disconnect: [], connect: [ { id: siblingCompany.id } ] },
+            JobTitle: 'Staff',
+            IsActive: true,
+            IsArchived: false,
+            CanManageCompanyDetails: false,
+            CanManageCompanyStaff: false,
+        },
+    });
+    expect(siblingCompanyPersonAtCompany.id).toBeDefined();
+    expect(siblingCompanyPersonAtCompany.id).toBeGreaterThan(0);
+  
+    const jwt = strapi.plugins['users-permissions'].services.jwt.issue({
+        id: user.id,
+    });
+      
+    await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
+    .get("/api/people-at-companies/security/" + siblingCompanyPersonAtCompany.id)
+    .set('accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .set('Authorization', 'Bearer ' + jwt)
+    .expect("Content-Type", /json/)
+    .expect(200)
+    .then((data) => {
+        expect(data.body).toBeDefined();
+        expect(data.body.canManageProfileFields).toBeDefined();
+        expect(data.body.canManageProfileFields).toBe(false);
+        expect(data.body.canManageActiveArchiveFlags).toBeDefined();
+        expect(data.body.canManageActiveArchiveFlags).toBe(false);
+        expect(data.body.canManageCompanyDetailsAndStaffFlags).toBeDefined();
+        expect(data.body.canManageCompanyDetailsAndStaffFlags).toBe(false);
+        expect(data.body.canViewPersonAtCompany).toBeDefined();
+        expect(data.body.canViewPersonAtCompany).toBe(true);
+    });        
 });
