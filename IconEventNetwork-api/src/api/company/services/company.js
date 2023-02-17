@@ -78,8 +78,9 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
     async canViewCompanyDetails(ctx) {
         const userId = ctx.state.user.id;
         const companyId = ctx.request.params.id;
-
-        // Check 1: Does this user have a PersonAtCompany record with CanManageCompanyDetails set to true?
+        let personsAtCompany;
+        let person;
+        let parentCompanyId = companyId; // default to company id, this gets reset on Check 2 if this company has a parent
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
                 Users: {
@@ -90,8 +91,39 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
             },
         });
         if (people.length > 0) {
-            let person = people[0]; // A user should only ever have 1 Person record.
-            let personsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+            person = people[0]; // A user should only ever have 1 Person record.
+
+        }
+
+        if (!person) return false; // No Person record found, return false.
+
+        // Check 1: Does this user have an active PersonAtCompany record for this company?
+        personsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+            filters: {
+                Person: {
+                    id: {
+                        $eq: person.id,
+                    }
+                },
+                Company: {
+                    id: {
+                        $eq: companyId,
+                    }
+                },
+                IsActive: {
+                    $eq: true,
+                },
+            }
+        });
+        if (personsAtCompany.length > 0) return true;
+
+        // Check 2: Does this company have a parent, and if so does this user have a PersonAtCompany record for that parent?
+        let company = await strapi.entityService.findOne('api::company.company', companyId, {
+            fields: ['ParentCompanyId'],
+        });
+        if (company && company.ParentCompanyId > 0) {
+            parentCompanyId = company.ParentCompanyId;
+            personsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
                 filters: {
                     Person: {
                         id: {
@@ -100,21 +132,41 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
                     },
                     Company: {
                         id: {
-                            $eq: companyId,
+                            $eq: parentCompanyId,
                         }
                     },
                     IsActive: {
                         $eq: true,
-                   },
+                    },
                 }
             });
-            if (personsAtCompany.length > 0) return true;
+            if (personsAtCompany.length > 0) return true;            
         }
 
- 
+        // Check 3: Does this user have an active PersonAtCompany record at any of this company's siblings or children?
+        personsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+            filters: {
+                Person: {
+                    id: {
+                        $eq: person.id,
+                    }
+                },
+                Company: {
+                    ParentCompanyId: {
+                        $eq: parentCompanyId,
+                    }
+                },
+                IsActive: {
+                    $eq: true,
+                },
+            }
+        });
+        if (personsAtCompany.length > 0) return true;            
+
         // TODO: check if user is Icon admin
 
         // All checks completed, If none returned true by this point, fall through to false
+        console.log('all company checks completed')
         return false;
     }
 }));
