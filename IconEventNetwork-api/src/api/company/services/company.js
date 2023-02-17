@@ -166,7 +166,6 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
         // TODO: check if user is Icon admin
 
         // All checks completed, If none returned true by this point, fall through to false
-        console.log('all company checks completed')
         return false;
     }
 }));

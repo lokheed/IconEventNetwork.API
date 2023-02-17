@@ -296,5 +296,113 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
                 }); 
             }
         }
-    }
+    },
+
+    async canViewPersonAtCompany(ctx) {
+        let canView = false;
+        const userId = ctx.state.user.id;
+        const personAtCompanyId = ctx.request.params.id;
+
+        let viewingPerson;
+        const people = await strapi.entityService.findMany('api::person.person', {
+            filters: {
+                Users: {
+                    id: {
+                       $eq: userId,
+                    },
+                }
+           }    ,
+        });
+        if (people.length > 0) {
+            viewingPerson = people[0]; // A user should only ever have 1 Person record.
+        }
+        if (!viewingPerson) return false; // The requesting user does not have a Person record
+
+        const thisPersonAtCompany = await strapi.entityService.findOne('api::person-at-company.person-at-company', personAtCompanyId, {
+           populate: { Person: true, Company: true },
+        });
+        if (!thisPersonAtCompany) return false; // The requested PersonAtCompany does not exist
+        let companyId = thisPersonAtCompany.Company.id;
+        let parentCompanyId = companyId; 
+    
+        // Check 1: Is this user this PersonAtCompany?
+        if (thisPersonAtCompany.Person.id == viewingPerson.id) return true;
+
+        // Check 2: Does this user have an active PersonAtCompany for this company?
+         let viewingPersonsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+            filters: {
+                Person: {
+                    id: {
+                        $eq: viewingPerson.id,
+                    }
+                },
+                Company: {
+                    id: {
+                        $eq: companyId,
+                    }
+                },
+                IsActive: {
+                    $eq: true,
+                },
+            }
+        });
+        if (viewingPersonsAtCompany.length > 0) {
+            return true;
+        }
+
+        // Check 3: Does this user have an active PersonAtCompany record at this company's parent?
+        let company = await strapi.entityService.findOne('api::company.company', companyId, {
+            fields: ['ParentCompanyId'],
+        });
+        if (company && company.id > 0 && company.ParentCompanyId && company.ParentCompanyId > 0) {
+            parentCompanyId = company.ParentCompanyId;
+            viewingPersonsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+                filters: {
+                    Person: {
+                        id: {
+                            $eq: viewingPerson.id,
+                        }
+                    },
+                    Company: {
+                        id: {
+                            $eq: parentCompanyId,
+                        }
+                    },
+                    IsActive: {
+                        $eq: true,
+                    },
+                }
+            });
+            if (viewingPersonsAtCompany.length > 0) {
+                return true;
+            }    
+        }
+
+        // Check 4: Does this user  have an active PersonAtCompany record at any of the company's siblings?
+        viewingPersonsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
+            filters: {
+                Person: {
+                    id: {
+                        $eq: viewingPerson.id,
+                    }
+                },
+                Company: {
+                    ParentCompanyId: {
+                        $eq: parentCompanyId,
+                    }
+                },
+                IsActive: {
+                    $eq: true,
+               },
+            }
+        });
+        if (viewingPersonsAtCompany.length > 0) {
+            return true;
+        }
+
+       // TODO: check if user is Icon admin
+
+       // All checks completed, If none returned true by this point, fall through to false
+       return false;
+    },
 }));

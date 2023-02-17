@@ -8,19 +8,19 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::person-at-company.person-at-company', ({ strapi }) => ({
     async canManagePersonAtCompany(ctx) {
-        const userId = ctx.state.user.id;
-        const personAtCompanyId = ctx.request.params.id;
         let canManageProfileFields = await strapi.service('api::person-at-company.person-at-company').canManageProfileFields(ctx);
         let canManageActiveArchiveFlags = await strapi.service('api::person-at-company.person-at-company').canManageActiveArchiveFlags(ctx);
         let canManageCompanyDetailsAndStaffFlags = await strapi.service('api::person-at-company.person-at-company').canManageCompanyDetailsAndStaffFlags(ctx);
-        if (!canManageProfileFields && !canManageActiveArchiveFlags && !canManageCompanyDetailsAndStaffFlags) {
+        let canViewPersonAtCompany = await strapi.service('api::person-at-company.person-at-company').canViewPersonAtCompany(ctx);
+        if (!canManageProfileFields && !canManageActiveArchiveFlags && !canManageCompanyDetailsAndStaffFlags && !canViewPersonAtCompany) {
             return ctx.forbidden('This user is forbidden to view or manage this person at this company', {});
         }
 
         ctx.body = {
             canManageProfileFields: canManageProfileFields, 
             canManageActiveArchiveFlags: canManageActiveArchiveFlags,
-            canManageCompanyDetailsAndStaffFlags: canManageCompanyDetailsAndStaffFlags
+            canManageCompanyDetailsAndStaffFlags: canManageCompanyDetailsAndStaffFlags,
+            canViewPersonAtCompany: canViewPersonAtCompany,
         }    
     },
 
