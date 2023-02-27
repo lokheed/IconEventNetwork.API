@@ -17,7 +17,8 @@ module.exports = createCoreService('api::person.person', ({ strapi }) =>  ({
  
          // Default DirectoryName to "FirstName LastName" if DirectoryName is blank
          if (!event.params.data.DirectoryName) event.params.data.DirectoryName = '';
-         if (event.params.data.DirectoryName === '' && event.params.data.FirstName && event.params.data.LastName) {
+         if (event.params.data.DirectoryName === '' && 
+             (event.params.data.FirstName?.length > 1 || event.params.data.LastName?.length > 1)) {
              event.params.data.DirectoryName = event.params.data.FirstName + ' ' + event.params.data.LastName;
          }
  
