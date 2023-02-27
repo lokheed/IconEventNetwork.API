@@ -5,7 +5,7 @@ jest.setTimeout(150000);
 beforeAll(async () => {
   await setupStrapi();
   await grantPrivilege(1, {
-    "address": ["create","update","find","findOne"],
+    "address": ["create", "delete","update","find","findOne"],
     "address-type": ["create","update","find","findOne"],
     "company": ["create","update","find","findOne","canManageCompany"],
     "company-status": ["create","update","find","findOne"],
@@ -13,7 +13,7 @@ beforeAll(async () => {
     "company-type": ["create","update","find","findOne"],
     "country": ["create","update","find","findOne"],
     "countrysubdivision": ["create","update","find","findOne"],
-    "email-address": ["create","update","find","findOne"],
+    "email-address": ["create", "delete","update","find","findOne"],
     "email-address-type": ["create","update","find","findOne"],
     "language": ["create","update","find","findOne"],
     "person": ["create","update","find","findOne","getByRequestingUser"],
