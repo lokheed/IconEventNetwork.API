@@ -17,8 +17,10 @@ module.exports = createCoreService('api::phone-number.phone-number', ({ strapi }
     },
 
     async validateInputs(params) {
-        let countryId = params.data.country.connect[0] ? params.data.country.connect[0].id : 0;
-        let phoneTypeId = params.data.phone_number_type.connect[0] ? params.data.phone_number_type.connect[0].id : 0;
+        let countryId = 0;
+        if (params.data.country?.connect) countryId = params.data.country.connect[0].id;
+        let phoneTypeId = 0
+        if (params.data.phone_number_type?.connect) phoneTypeId = params.data.phone_number_type.connect[0].id;
         const phoneNumberId = params.where?.id ? params.where.id : 0;
         if ((countryId === 0 || phoneTypeId === 0) && phoneNumberId > 0) {
             const existingPhone = await strapi.service('api::phone-number.phone-number')
@@ -37,7 +39,8 @@ module.exports = createCoreService('api::phone-number.phone-number', ({ strapi }
     },
 
     async setVerifiedInputs(event) {
-        let countryId = event.params.data.country.connect[0] ? event.params.data.country.connect[0].id : 0;
+        let countryId = 0;
+        if (event.params.data.country?.connect) countryId = event.params.data.country.connect[0].id;
         const phoneNumberId = event.params.where?.id ? event.params.where.id : 0;
         if (countryId === 0 && phoneNumberId > 0) {
           const existingPhone = await strapi.service('api::phone-number.phone-number')
