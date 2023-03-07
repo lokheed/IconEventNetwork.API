@@ -16,14 +16,17 @@ module.exports = createCoreService('api::person.person', ({ strapi }) =>  ({
          if (event.params.data.PreferredName)  event.params.data.PreferredName = event.params.data.PreferredName.trim();
  
          // Default DirectoryName to "FirstName LastName" if DirectoryName is blank
-         if (!event.params.data.DirectoryName) event.params.data.DirectoryName = '';
-         if (event.params.data.DirectoryName === '' && 
-             (event.params.data.FirstName?.length > 1 || event.params.data.LastName?.length > 1)) {
-             event.params.data.DirectoryName = event.params.data.FirstName + ' ' + event.params.data.LastName;
+         const personId = event.params.where?.id ? event.params.where.id : 0;
+         if (personId === 0 && (!event.params.data.DirectoryName || event.params.data.DirectoryName.trim() === '')) {
+            const firstName = event.params.data.FirstName.trim()??'';
+            const lastName = event.params.data.LastName.trim()??'';
+            const directoryName = firstName + ' ' + lastName;
+            event.params.data.DirectoryName = directoryName.trim();
          }
- 
-         // Set SearchableName to transliterated DirectoryName converted ot lower case
-         event.params.data.SearchableName = tr.transliterate(event.params.data.DirectoryName).toLowerCase();  
+         if (event.params.data.DirectoryName) {
+            // Set SearchableName to transliterated DirectoryName converted ot lower case
+            event.params.data.SearchableName = tr.transliterate(event.params.data.DirectoryName).toLowerCase();  
+         }
 
          return event;
      },
