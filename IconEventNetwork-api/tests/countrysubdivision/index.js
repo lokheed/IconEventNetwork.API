@@ -100,7 +100,7 @@ it("COMMON-- CountrySubdivision: Should not return country subdivisions for anon
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- CountrySubdivision: Should return singular country subdivision for authenticated user", async () => {
@@ -140,7 +140,7 @@ it("COMMON-- CountrySubdivision: Should not return singular country for anonymou
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- CountrySubdivision: Should transilterate SearchableName for country subdivision with accented characters", async () => {

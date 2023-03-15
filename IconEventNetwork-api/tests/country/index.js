@@ -78,7 +78,7 @@ it("COMMON-- Country: Should not return countries for anonymous user", async () 
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- Country: Should return singular country for authenticated user", async () => {
@@ -118,7 +118,7 @@ it("COMMON-- Country: Should not return singular country for anonymous user", as
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- Country: Should transilterate SearchableName for country with accented characters", async () => {
