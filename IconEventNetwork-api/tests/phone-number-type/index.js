@@ -80,7 +80,7 @@ it("COMMON-- PhoneNumberType: Should not return phone-number-types for anonymous
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- PhoneNumberType: Should return singular phone-number-type for authenticated user", async () => {
@@ -120,5 +120,5 @@ it("COMMON-- PhoneNumberType: Should not return singular phone-number-type for a
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });

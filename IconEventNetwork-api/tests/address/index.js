@@ -98,7 +98,7 @@ it("COMMON-- Address: Should not return addresses for anonymous user", async () 
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- Address: Should return singular address for authenticated user", async () => {
@@ -138,5 +138,5 @@ it("COMMON-- Address: Should not return singular address for anonymous user", as
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });

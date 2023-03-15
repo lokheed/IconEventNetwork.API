@@ -18,7 +18,7 @@ it("COMMON-- Person: Should not return person for anonymous user", async () => {
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
-    .expect(500);
+    .expect(403);
 });
 
 it("COMMON-- Person: Should return the correct Person record for a requesting user with an existing Person record", async () => {
