@@ -42,8 +42,7 @@
       "min": 0
     },
     "SearchableName": {
-      "type": "string",
-      "private": true
+      "type": "string"
     }
   }
 }
