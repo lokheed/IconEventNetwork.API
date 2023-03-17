@@ -102,19 +102,20 @@
     "AccountManager": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::person.person"
+      "target": "api::person-at-company.person-at-company"
     },
     "PrimaryContact": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::person.person"
+      "target": "api::person-at-company.person-at-company"
     },
     "LogoImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }
