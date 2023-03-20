@@ -4,7 +4,8 @@
   "info": {
     "singularName": "social-media-type",
     "pluralName": "social-media-types",
-    "displayName": "SocialMediaType"
+    "displayName": "SocialMediaType",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -45,6 +46,9 @@
       "default": true,
       "required": true,
       "private": true
+    },
+    "BaseURL": {
+      "type": "string"
     }
   }
 }
