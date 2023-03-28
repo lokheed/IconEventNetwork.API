@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "third_party_subsystems",
+  "info": {
+    "singularName": "third-party-subsystem",
+    "pluralName": "third-party-subsystems",
+    "displayName": "ThirdPartySubsystem"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Description": {
+      "type": "string"
+    },
+    "ExternalId": {
+      "type": "string"
+    }
+  }
+}
