@@ -24,26 +24,22 @@
     "IsActive": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "AppliesToPerson": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "AppliesToPersonCompany": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "AppliesToCompany": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     }
   }
 }
