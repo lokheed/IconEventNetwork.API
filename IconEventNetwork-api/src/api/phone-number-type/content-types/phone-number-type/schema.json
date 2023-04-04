@@ -30,7 +30,7 @@
     "AppliesToPerson": {
       "type": "boolean",
       "default": true,
-      "required": true,
+      "required": true
     },
     "AppliesToPersonCompany": {
       "type": "boolean",

@@ -20,8 +20,7 @@
     "IsActive": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "company_type": {
       "type": "relation",

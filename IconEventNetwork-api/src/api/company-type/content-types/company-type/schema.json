@@ -18,8 +18,7 @@
     "IsActive": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "company_sub_types": {
       "type": "relation",
