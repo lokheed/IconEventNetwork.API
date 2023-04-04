@@ -19,8 +19,7 @@
     "IsActive": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "Rank": {
       "type": "integer",
@@ -32,19 +31,16 @@
       "type": "boolean",
       "default": true,
       "required": true,
-      "private": true
     },
     "AppliesToPersonCompany": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     },
     "AppliesToCompany": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     }
   }
 }
