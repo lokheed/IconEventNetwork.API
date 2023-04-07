@@ -24,8 +24,7 @@
     "IsActive": {
       "type": "boolean",
       "default": true,
-      "required": true,
-      "private": true
+      "required": true
     }
   }
 }
