@@ -32,7 +32,7 @@ it("COMMON-- PersonAtCompany: All text fields should be trimmed of white space."
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -104,7 +104,7 @@ it("COMMON-- PersonAtCompany: A user should never be able to change Person once 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -120,7 +120,7 @@ it("COMMON-- PersonAtCompany: A user should never be able to change Person once 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: otherUser.id } ] },
+            user: user.id,
         },
     });
     expect(otherPerson.id).toBeDefined();
@@ -193,7 +193,7 @@ it("COMMON-- PersonAtCompany: A user should never be able to change Company once
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -278,7 +278,7 @@ it("COMMON-- PersonAtCompany: A user should be able to modify the profile fields
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -373,7 +373,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should not b
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -424,7 +424,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should not b
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: otherCompanyStaffUser.id } ] },
+            user: otherCompanyStaffUser.id,
         },
     });
     expect(otherCompanyStaffPerson.id).toBeDefined();
@@ -504,7 +504,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -543,7 +543,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+            user: staffUser.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -623,7 +623,7 @@ it("COMMON-- PersonAtCompany: An inactive PersonAtCompany staff admin should not
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -662,7 +662,7 @@ it("COMMON-- PersonAtCompany: An inactive PersonAtCompany staff admin should not
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+            user: staffUser.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -739,7 +739,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the profile fi
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -822,7 +822,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the IsActive o
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -917,7 +917,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -956,7 +956,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+            user: staffUser.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -1038,7 +1038,7 @@ it("COMMON-- PersonAtCompany: An inactive PersonAtCompany staff admin should not
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -1077,7 +1077,7 @@ it("COMMON-- PersonAtCompany: An inactive PersonAtCompany staff admin should not
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+            user: staffUser.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -1156,7 +1156,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the IsActive a
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -1248,7 +1248,7 @@ it("COMMON-- PersonAtCompany: A user should not be able to modify the CanManageC
            IsActive: true,
            IsArchived: false,
            IsHidden: false,
-           Users: { disconnect: [], connect: [ { id: user.id } ] },
+           user: user.id,
        },
    });
    expect(staffPerson.id).toBeDefined();
@@ -1343,7 +1343,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -1382,7 +1382,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+            user: staffUser.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -1464,7 +1464,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
            IsActive: true,
            IsArchived: false,
            IsHidden: false,
-           Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+           user: staffAdminUser.id,
        },
    });
    expect(staffAdminPerson.id).toBeDefined();
@@ -1503,7 +1503,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should be ab
            IsActive: true,
            IsArchived: false,
            IsHidden: false,
-           Users: { disconnect: [], connect: [ { id: otherStaffAdminUser.id } ] },
+           user: otherStaffAdminUser.id,
        },
    });
    expect(otherStaffAdminPerson.id).toBeDefined();
@@ -1585,7 +1585,7 @@ it("COMMON-- PersonAtCompany: An active PersonAtCompany staff admin should not b
            IsActive: true,
            IsArchived: false,
            IsHidden: false,
-           Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+           user: staffAdminUser.id,
        },
    });
    expect(staffAdminPerson.id).toBeDefined();
@@ -1666,7 +1666,7 @@ it("COMMON-- PersonAtCompany: When a Person record is inactivated, all related P
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffAdminUser.id } ] },
+            user: staffAdminUser.id,
         },
     });
     expect(staffAdminPerson.id).toBeDefined();
@@ -1705,7 +1705,7 @@ it("COMMON-- PersonAtCompany: When a Person record is inactivated, all related P
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: staffUser.id } ] },
+            user: staffUser.id,
         },
     });
     expect(staffPerson.id).toBeDefined();
@@ -1807,7 +1807,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view their own PersonAt
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -1876,7 +1876,7 @@ it("COMMON-- PersonAtCompany: A Person should not be able to view someone else's
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -1915,7 +1915,7 @@ it("COMMON-- PersonAtCompany: A Person should not be able to view someone else's
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: evilUser.id } ] },
+            user: evilUser.id,
         },
     });
     expect(evilPerson.id).toBeDefined();
@@ -1970,7 +1970,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view someone else's Per
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -2009,7 +2009,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view someone else's Per
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: coworkerUser.id } ] },
+            user: coworkerUser.id,
         },
     });
     expect(coworkerPerson.id).toBeDefined();
@@ -2102,7 +2102,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view someone else's Per
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -2141,7 +2141,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view someone else's Per
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: parentCompanyUser.id } ] },
+            user: parentCompanyUser.id,
         },
     });
     expect(parentCompanyPerson.id).toBeDefined();
@@ -2247,7 +2247,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view someone else's Per
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -2286,7 +2286,7 @@ it("COMMON-- PersonAtCompany: A Person should be able to view someone else's Per
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: siblingCompanyUser.id } ] },
+            user: siblingCompanyUser.id,
         },
     });
     expect(siblingCompanyPerson.id).toBeDefined();

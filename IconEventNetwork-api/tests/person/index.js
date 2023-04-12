@@ -43,7 +43,7 @@ it("COMMON-- Person: Should return the correct Person record for a requesting us
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
 
@@ -96,7 +96,7 @@ it("COMMON-- Person: Should populate DirectoryName with 'FirstName LastName' if 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
      
@@ -146,7 +146,7 @@ it("COMMON-- Person: All text fields should be trimmed of white space", async ()
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
      
@@ -202,7 +202,7 @@ it("COMMON-- Person: SearchableName should be DirectoryName transliterated and l
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -254,55 +254,6 @@ it("COMMON-- Person: Should return the a new empty Person record for a requestin
     });
 });
 
-it("COMMON-- Person: Should throw an exception when attempting to create a Person record for a User that already has one.", async () => {
-    expect.assertions(1); // required in case the exception is NOT thrown, having 0 assertions will fail the test
-
-    /** Gets the default user role */
-    const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
-
-    const role = defaultRole ? defaultRole.id : null;
-
-    /** Creates a new user an push to database */
-    const user = await strapi.plugins['users-permissions'].services.user.add({
-        ...mockUserData,
-        username: 'persontester6',
-        email: 'persontester6@strapi.com',
-        role,
-    });
- 
-    await strapi.query("api::person.person").create({
-        data: {
-            FirstName: 'Existing',
-            MiddleName: '',
-            LastName: 'Person',
-            DirectoryName: 'Existing Person',
-            SearchableName: '',
-            IsActive: true,
-            IsArchived: false,
-            IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
-        },
-    });
-
-    try {
-        await strapi.query("api::person.person").create({
-            data: {
-                FirstName: 'Duplicate',
-                MiddleName: '',
-                LastName: 'Person',
-                DirectoryName: 'Duplicate Person',
-                SearchableName: '',
-                IsActive: true,
-                IsArchived: false,
-                IsHidden: false,
-                Users: { disconnect: [], connect: [ { id: user.id } ] },
-            },
-        });
-    } catch (e) {
-        expect(e.toString()).toBe(new ApplicationError('A Person object already exists for this User', {}).toString());
-    }
-});
-
 it("COMMON-- Person: A person should be able to successfully update their own Person record", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
@@ -327,7 +278,7 @@ it("COMMON-- Person: A person should be able to successfully update their own Pe
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     
@@ -377,7 +328,7 @@ it("COMMON-- Person: A person should not be able to update someone else's Person
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: goodUser.id } ] },
+            user: goodUser.id,
         },
     });
     
@@ -430,7 +381,7 @@ it("COMMON-- Person: A person should not be able to get someone else's Person re
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: goodUser.id } ] },
+            user: goodUser.id,
         },
     });
     
@@ -478,7 +429,7 @@ it("COMMON-- Person: A person should be able to get their own Person record", as
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: goodUser.id } ] },
+            user: goodUser.id,
         },
     });
 

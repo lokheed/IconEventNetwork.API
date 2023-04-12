@@ -35,7 +35,7 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
         // Check 1: Does this user have a PersonAtCompany record with CanManageCompanyDetails set to true?
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
-                Users: {
+                user: {
                     id: {
                         $eq: userId,
                     },
@@ -82,7 +82,7 @@ module.exports = createCoreService('api::company.company', ({ strapi }) =>  ({
         let parentCompanyId = companyId; // default to company id, this gets reset on Check 2 if this company has a parent
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
-                Users: {
+                user: {
                     id: {
                         $eq: userId,
                     },

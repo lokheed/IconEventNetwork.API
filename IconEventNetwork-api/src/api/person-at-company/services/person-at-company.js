@@ -35,22 +35,21 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
      
         // Check 1: Is this user this PersonAtCompany?
         const person = await strapi.entityService.findOne('api::person.person', thisPersonAtCompany.Person.id, {
-            populate: { Users: true },
+            populate: { user: true },
         });
 
         if (!person) return false;
 
-        person.Users.forEach(function(user) {
-            if (user.id === userId) {
-                canManage = true;
-            }
-        });
+        if (person.user.id === userId) {
+            canManage = true;
+        }
+
 
 
         // Check 2: Does this user have canManageCompanyStaff rights for this company?
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
-                Users: {
+                user: {
                     id: {
                         $eq: userId,
                     },
@@ -119,7 +118,7 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         // Check 1: Does this user have canManageCompanyStaff rights for this company?
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
-                Users: {
+                user: {
                     id: {
                         $eq: userId,
                     },
@@ -185,7 +184,7 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         // Check 1: Does this user have canManageCompanyStaff rights for this company, and this record is not their own?
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
-                Users: {
+                user: {
                     id: {
                         $eq: userId,
                     },
@@ -224,15 +223,13 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
 
         // Check 2: Does this user have canManageCompanyStaff rights for this company, this record is their own, and there is at least one other active staff admin for this company?
         const thisPerson = await strapi.entityService.findOne('api::person.person', thisPersonAtCompany.Person.id, {
-            populate: { Users: true },
+            populate: { user: true },
         });
         let isThisUsersOwnPersonAtCompanyRecord = false;
-        if (thisPerson && thisPerson.Users.length > 0) {
-            thisPerson.Users.forEach(function(user) {
-                if (user.id === userId) {
-                    isThisUsersOwnPersonAtCompanyRecord = true;
-                }
-            });    
+        if (thisPerson) {
+            if (thisPerson.user.id === userId) {
+                isThisUsersOwnPersonAtCompanyRecord = true;
+            }  
         }
         if (isThisUsersOwnPersonAtCompanyRecord) {
             const otherAdminPersonsAtCompany = await strapi.entityService.findMany('api::person-at-company.person-at-company', {
@@ -306,7 +303,7 @@ module.exports = createCoreService('api::person-at-company.person-at-company', (
         let viewingPerson;
         const people = await strapi.entityService.findMany('api::person.person', {
             filters: {
-                Users: {
+                user: {
                     id: {
                        $eq: userId,
                     },
