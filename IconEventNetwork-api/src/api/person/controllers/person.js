@@ -13,7 +13,7 @@ module.exports = createCoreController('api::person.person', ({ strapi }) => ({
         const people = await strapi.entityService.findMany('api::person.person', {
             fields: ['FirstName', 'MiddleName', 'LastName', 'DirectoryName', 'PreferredName'],
             populate: {
-                Users: {
+                user: {
                     fields: ['username', 'email']
                 },
                 ProfileImage: {
@@ -21,7 +21,7 @@ module.exports = createCoreController('api::person.person', ({ strapi }) => ({
                 }
             },
             filters: {
-                Users: {
+                user: {
                     id: userId,
                 }
             },
@@ -49,7 +49,7 @@ module.exports = createCoreController('api::person.person', ({ strapi }) => ({
                 IsActive: true,
                 IsArchived: false,
                 IsHidden: false,
-                Users: { disconnect: [], connect: [ { id: userId } ] },
+                user: userId,
             },
         });
         ctx.body = { data: person };

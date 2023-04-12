@@ -82,7 +82,7 @@ it("COMMON-- Company: A user should be able to successfully update a company if 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -162,7 +162,7 @@ it("COMMON-- Company: A user should not be able to update a company if their rel
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -238,7 +238,7 @@ it("COMMON-- Company: A user should not be able to update a company if they do n
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -300,7 +300,7 @@ it("COMMON-- Company: A user should be able to view and manage a company if thei
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -378,7 +378,7 @@ it("COMMON-- Company: A user should not be able to view but not manage a company
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -456,7 +456,7 @@ it("COMMON-- Company: A user should not be able to view or manage a company if t
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -513,7 +513,7 @@ it("COMMON-- Company: A user should be able to view but not manage a company if 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -602,7 +602,7 @@ it("COMMON-- Company: A user should be able to view but not manage a company if 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
@@ -691,7 +691,7 @@ it("COMMON-- Company: A user should be able to view but not manage a company if 
             IsActive: true,
             IsArchived: false,
             IsHidden: false,
-            Users: { disconnect: [], connect: [ { id: user.id } ] },
+            user: user.id,
         },
     });
     expect(person.id).toBeDefined();
