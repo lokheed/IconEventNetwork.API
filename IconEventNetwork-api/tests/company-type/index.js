@@ -14,25 +14,29 @@ it("COMMON-- CompanyType: Should return company-types for authenticated user", a
     // Intentionally create entries out of order
     strapi.query("api::company-type.company-type").create({
         data: {
-            DisplayName: 'Staff',
+            Name: 'Staff',
+            Description: 'Icon Network Staff',
             IsActive: 1,
         },
     });  
     strapi.query("api::company-type.company-type").create({
         data: {
-             DisplayName: 'Planner',
+             Name: 'Planner',
+             Description: 'Event Planners',
              IsActive: 1,
         },
     });   
     strapi.query("api::company-type.company-type").create({
         data: {
-            DisplayName: 'Partner',
+            Name: 'Partner',
+            Description: 'Providers of goods, services, and venues',
             IsActive: 1,
          },
     });    
    strapi.query("api::company-type.company-type").create({
       data: {
-            DisplayName: 'Tourism Board',
+            Name: 'Tourism Board',
+            Description: 'Tourism Boards',
             IsActive: 1,
       },
     });
@@ -53,7 +57,7 @@ it("COMMON-- CompanyType: Should return company-types for authenticated user", a
       });    
       
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/company-types?sort=DisplayName")
+    .get("/api/company-types?sort=Name")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)
@@ -62,16 +66,16 @@ it("COMMON-- CompanyType: Should return company-types for authenticated user", a
     .then((data) => {
         expect(data.body).toBeDefined();
         expect(data.body.data.length).toBe(4);
-        expect(data.body.data[0].attributes.DisplayName).toBe('Partner');
-        expect(data.body.data[1].attributes.DisplayName).toBe('Planner');
-        expect(data.body.data[2].attributes.DisplayName).toBe('Staff');
-        expect(data.body.data[3].attributes.DisplayName).toBe('Tourism Board');
+        expect(data.body.data[0].attributes.Name).toBe('Partner');
+        expect(data.body.data[1].attributes.Name).toBe('Planner');
+        expect(data.body.data[2].attributes.Name).toBe('Staff');
+        expect(data.body.data[3].attributes.Name).toBe('Tourism Board');
     });
 });
 
 it("COMMON-- CompanyType: Should not return company-types for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/company-types?sort=DisplayName")
+    .get("/api/company-types?sort=Name")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
@@ -105,7 +109,7 @@ it("COMMON-- CompanyType: Should return singular company-type for authenticated 
     .expect(200)
     .then((data) => {
         expect(data.body).toBeDefined();
-        expect(data.body.data.attributes.DisplayName).toBe('Staff');
+        expect(data.body.data.attributes.Name).toBe('Staff');
     });
 });
 

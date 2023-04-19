@@ -13,51 +13,56 @@ const mockUserData = {
 it("COMMON-- CompanySubType: Should return all company-sub-types for authenticated user", async () => {
     const companyTypePlanner = await strapi.query('api::company-type.company-type').findOne({
         where: {
-            DisplayName: 'Planner',
+            Name: 'Planner',
         }
     }, []);
     expect(companyTypePlanner).toBeDefined();
     expect(companyTypePlanner.id).toBeDefined();    
     strapi.query("api::company-sub-type.company-sub-type").create({
         data: {
-            DisplayName: 'Party',
+            Name: 'Party',
+            Description: 'some description',
             IsActive: 1,
-            company_type: { disconnect: [], connect: [ { id: companyTypePlanner.id} ] },
+            company_types: { disconnect: [], connect: [ { id: companyTypePlanner.id} ] },
         },
     });  
     strapi.query("api::company-sub-type.company-sub-type").create({
         data: {
-             DisplayName: 'Corporate',
+             Name: 'Corporate',
+             Description: 'some description',
              IsActive: 1,
-             company_type: { disconnect: [], connect: [ { id: companyTypePlanner.id} ] },
+             company_types: { disconnect: [], connect: [ { id: companyTypePlanner.id} ] },
         },
     });  
     const companyTypePartner = await strapi.query('api::company-type.company-type').findOne({
         where: {
-            DisplayName: 'Partner',
+            Name: 'Partner',
         }
     }, []);
     expect(companyTypePartner).toBeDefined();
     expect(companyTypePartner.id).toBeDefined();     
     strapi.query("api::company-sub-type.company-sub-type").create({
         data: {
-            DisplayName: 'Florist',
+            Name: 'Florist',
+            Description: 'some description',
             IsActive: 1,
-            company_type: { disconnect: [], connect: [ { id: companyTypePartner.id} ] },
+            company_types: { disconnect: [], connect: [ { id: companyTypePartner.id} ] },
          },
     });    
     strapi.query("api::company-sub-type.company-sub-type").create({
       data: {
-            DisplayName: 'Photographer',
+            Name: 'Photographer',
+            Description: 'some description',
             IsActive: 1,
-            company_type: { disconnect: [], connect: [ { id: companyTypePartner.id} ] },
+            company_types: { disconnect: [], connect: [ { id: companyTypePartner.id} ] },
       },
     });  
     strapi.query("api::company-sub-type.company-sub-type").create({
       data: {
-            DisplayName: 'Caterer',
+            Name: 'Caterer',
+            Description: 'some description',
             IsActive: 1,
-            company_type: { disconnect: [], connect: [ { id: companyTypePartner.id} ] },
+            company_types: { disconnect: [], connect: [ { id: companyTypePartner.id} ] },
       },
     });
  
@@ -77,7 +82,7 @@ it("COMMON-- CompanySubType: Should return all company-sub-types for authenticat
       });    
       
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/company-sub-types?sort=DisplayName")
+    .get("/api/company-sub-types?sort=Name")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)
@@ -86,15 +91,15 @@ it("COMMON-- CompanySubType: Should return all company-sub-types for authenticat
     .then((data) => {
         expect(data.body).toBeDefined();
         expect(data.body.data.length).toBe(5);
-        expect(data.body.data[0].attributes.DisplayName).toBe('Caterer');
-        expect(data.body.data[1].attributes.DisplayName).toBe('Corporate');
-        expect(data.body.data[2].attributes.DisplayName).toBe('Florist');
-        expect(data.body.data[3].attributes.DisplayName).toBe('Party');
-        expect(data.body.data[4].attributes.DisplayName).toBe('Photographer');
+        expect(data.body.data[0].attributes.Name).toBe('Caterer');
+        expect(data.body.data[1].attributes.Name).toBe('Corporate');
+        expect(data.body.data[2].attributes.Name).toBe('Florist');
+        expect(data.body.data[3].attributes.Name).toBe('Party');
+        expect(data.body.data[4].attributes.Name).toBe('Photographer');
     });
 });
 
-it("COMMON-- CompanySubType: Should return correct company-sub-types by company-type for authenticated user", async () => {
+it("COMMON-- CompanySubType: Should return correct company-sub-types by company-types for authenticated user", async () => {
     /** Gets the default user role */
     const defaultRole = await strapi.query('plugin::users-permissions.role').findOne({}, []);
 
@@ -113,8 +118,7 @@ it("COMMON-- CompanySubType: Should return correct company-sub-types by company-
     });    
     
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/company-sub-types?populate=*&filters\[company_type\][DisplayName][$eq]=Planner&sort=DisplayName")
-    //.get("/api/company-sub-types?populate=company-type&filters[company-type][DisplayName][$eq]=Planner&sort=DisplayName")
+    .get("/api/company-sub-types?populate=*&filters\[company_types\][Name][$eq]=Planner&sort=Name")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)
@@ -123,14 +127,14 @@ it("COMMON-- CompanySubType: Should return correct company-sub-types by company-
     .then((data) => {
         expect(data.body).toBeDefined();
         expect(data.body.data.length).toBe(2);
-        expect(data.body.data[0].attributes.DisplayName).toBe('Corporate');
-        expect(data.body.data[1].attributes.DisplayName).toBe('Party');
+        expect(data.body.data[0].attributes.Name).toBe('Corporate');
+        expect(data.body.data[1].attributes.Name).toBe('Party');
     });    
 });
 
 it("COMMON-- CompanySubType: Should not return company-sub-types for anonymous user", async () => {
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/company-sub-types?sort=DisplayName")
+    .get("/api/company-sub-types?sort=Name")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .expect("Content-Type", /json/)
@@ -164,7 +168,7 @@ it("COMMON-- CompanySubType: Should return singular company-sub-type for authent
     .expect(200)
     .then((data) => {
         expect(data.body).toBeDefined();
-        expect(data.body.data.attributes.DisplayName).toBe('Party');
+        expect(data.body.data.attributes.Name).toBe('Party');
     });
 });
 
