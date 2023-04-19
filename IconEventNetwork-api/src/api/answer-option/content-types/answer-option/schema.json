@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "answer_options",
+  "info": {
+    "singularName": "answer-option",
+    "pluralName": "answer-options",
+    "displayName": "AnswerOption"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Text": {
+      "type": "string",
+      "required": true
+    },
+    "Rank": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "question": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::question.question",
+      "inversedBy": "answer_options"
+    }
+  }
+}

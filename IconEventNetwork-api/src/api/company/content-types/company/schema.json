@@ -33,15 +33,17 @@
       "required": true,
       "private": true
     },
-    "CompanyType": {
+    "company_types": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::company-type.company-type"
+      "relation": "manyToMany",
+      "target": "api::company-type.company-type",
+      "inversedBy": "companies"
     },
-    "CompanySubType": {
+    "company_sub_types": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::company-sub-type.company-sub-type"
+      "relation": "manyToMany",
+      "target": "api::company-sub-type.company-sub-type",
+      "inversedBy": "companies"
     },
     "Tagline": {
       "type": "string"

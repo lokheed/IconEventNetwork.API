@@ -4,14 +4,15 @@
   "info": {
     "singularName": "company-type",
     "pluralName": "company-types",
-    "displayName": "CompanyType"
+    "displayName": "CompanyType",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "DisplayName": {
+    "Name": {
       "type": "string",
       "unique": true
     },
@@ -22,9 +23,18 @@
     },
     "company_sub_types": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::company-sub-type.company-sub-type",
-      "mappedBy": "company_type"
+      "mappedBy": "company_types"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "companies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::company.company",
+      "mappedBy": "company_types"
     }
   }
 }

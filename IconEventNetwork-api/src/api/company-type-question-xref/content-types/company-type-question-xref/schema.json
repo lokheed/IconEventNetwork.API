@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_type_question_xrefs",
+  "info": {
+    "singularName": "company-type-question-xref",
+    "pluralName": "company-type-question-xrefs",
+    "displayName": "CompanyTypeQuestionXref"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "company_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-type.company-type"
+    },
+    "company_sub_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::company-sub-type.company-sub-type"
+    },
+    "question": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::question.question"
+    },
+    "IsOnApplication": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "IsRequiredOnApplication": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "ApplicationQuestionRank": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "IsOnCompanyProfile": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "IsRequiredOnCompanyProfile": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "ProfileQuestionRank": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "IsOnSearchFilter": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "FilterRank": {
+      "type": "integer",
+      "default": 0,
+      "required": true,
+      "min": 0
+    }
+  }
+}
