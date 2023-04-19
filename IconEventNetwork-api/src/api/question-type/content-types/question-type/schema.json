@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "question_types",
+  "info": {
+    "singularName": "question-type",
+    "pluralName": "question-types",
+    "displayName": "QuestionType"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "Description": {
+      "type": "string"
+    }
+  }
+}

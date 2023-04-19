@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "DisplayName": {
+    "Name": {
       "type": "string",
       "required": true,
       "unique": false
@@ -22,9 +22,18 @@
       "default": true,
       "required": true
     },
-    "company_type": {
+    "Description": {
+      "type": "string"
+    },
+    "companies": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
+      "target": "api::company.company",
+      "mappedBy": "company_sub_types"
+    },
+    "company_types": {
+      "type": "relation",
+      "relation": "manyToMany",
       "target": "api::company-type.company-type",
       "inversedBy": "company_sub_types"
     }
