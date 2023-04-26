@@ -12,11 +12,11 @@ module.exports = ({ env }) => ({
           requireTLS: true,
           connectionTimeout: 10,
         },
+        settings: {
+          defaultFrom: 'no-reply@TheIconNetwork.com',
+          defaultReplyTo: 'no-reply@TheIconNetwork.com',
+        }, 
       },
-      settings: {
-        defaultFrom: 'no-reply@IconEventNetwork.com',
-        defaultReplyTo: 'no-reply@IconEventNetwork.com',
-      }, 
     },    
   });
   
