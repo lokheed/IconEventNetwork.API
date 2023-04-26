@@ -1,7 +1,7 @@
 {
   "name": "icon-event-network-api",
   "private": true,
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "The Icon Network API",
   "scripts": {
     "develop": "strapi develop",
@@ -12,18 +12,18 @@
     "test-all": "jest --forceExit"
   },
   "dependencies": {
-    "@strapi/plugin-documentation": "^4.9.2",
-    "@strapi/plugin-i18n": "4.9.2",
-    "@strapi/plugin-users-permissions": "4.9.2",
-    "@strapi/provider-email-sendgrid": "4.9.2",
-    "@strapi/provider-upload-aws-s3": "4.9.2",
-    "@strapi/strapi": "4.9.2",
+    "@strapi/plugin-documentation": "^4.10.1",
+    "@strapi/plugin-i18n": "4.10.1",
+    "@strapi/plugin-users-permissions": "4.10.1",
+    "@strapi/provider-email-sendgrid": "4.10.1",
+    "@strapi/provider-upload-aws-s3": "4.10.1",
+    "@strapi/strapi": "4.10.1",
     "better-sqlite3": "8.3.0",
     "node-fetch": "^2.6.9",
     "pg": "^8.10.0",
     "request": "^2.88.2",
     "strapi-plugin-fuzzy-search": "^1.10.4",
-    "strapi-plugin-import-export-entries": "^1.18.1",
+    "strapi-plugin-import-export-entries": "^1.19.1",
     "strapi-plugin-slugify": "^2.3.2",
     "strapi-provider-email-smtp": "^1.0.3",
     "transliteration": "1.6.5"
@@ -35,7 +35,7 @@
     "uuid": "c7debdcf-b070-4f5a-ace1-fc42b87fc42a"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=12.x.x <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
