@@ -25,6 +25,10 @@
     "EmailAddress": {
       "type": "email",
       "required": true
+    },
+    "IsPrimary": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

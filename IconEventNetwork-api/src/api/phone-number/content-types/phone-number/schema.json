@@ -4,7 +4,8 @@
   "info": {
     "singularName": "phone-number",
     "pluralName": "phone-numbers",
-    "displayName": "PhoneNumber"
+    "displayName": "PhoneNumber",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -38,6 +39,10 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::phone-number-type.phone-number-type"
+    },
+    "IsPrimary": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-04-26T18:54:07.119Z"
+    "x-generation-date": "2023-04-27T14:35:31.118Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -132,6 +132,9 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "IsPrimary": {
+                "type": "boolean"
               }
             }
           }
@@ -676,6 +679,9 @@
                 }
               }
             }
+          },
+          "IsPrimary": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -2919,6 +2925,9 @@
                                                                       }
                                                                     }
                                                                   },
+                                                                  "IsPrimary": {
+                                                                    "type": "boolean"
+                                                                  },
                                                                   "createdAt": {
                                                                     "type": "string",
                                                                     "format": "date-time"
@@ -3092,6 +3101,9 @@
                                                                       }
                                                                     }
                                                                   },
+                                                                  "IsPrimary": {
+                                                                    "type": "boolean"
+                                                                  },
                                                                   "createdAt": {
                                                                     "type": "string",
                                                                     "format": "date-time"
@@ -3239,6 +3251,9 @@
                                                                   "EmailAddress": {
                                                                     "type": "string",
                                                                     "format": "email"
+                                                                  },
+                                                                  "IsPrimary": {
+                                                                    "type": "boolean"
                                                                   },
                                                                   "createdAt": {
                                                                     "type": "string",
@@ -7071,6 +7086,9 @@
                                           }
                                         }
                                       },
+                                      "IsPrimary": {
+                                        "type": "boolean"
+                                      },
                                       "createdAt": {
                                         "type": "string",
                                         "format": "date-time"
@@ -7244,6 +7262,9 @@
                                           }
                                         }
                                       },
+                                      "IsPrimary": {
+                                        "type": "boolean"
+                                      },
                                       "createdAt": {
                                         "type": "string",
                                         "format": "date-time"
@@ -7391,6 +7412,9 @@
                                       "EmailAddress": {
                                         "type": "string",
                                         "format": "email"
+                                      },
+                                      "IsPrimary": {
+                                        "type": "boolean"
                                       },
                                       "createdAt": {
                                         "type": "string",
@@ -10196,6 +10220,9 @@
                                                         }
                                                       }
                                                     },
+                                                    "IsPrimary": {
+                                                      "type": "boolean"
+                                                    },
                                                     "createdAt": {
                                                       "type": "string",
                                                       "format": "date-time"
@@ -10369,6 +10396,9 @@
                                                         }
                                                       }
                                                     },
+                                                    "IsPrimary": {
+                                                      "type": "boolean"
+                                                    },
                                                     "createdAt": {
                                                       "type": "string",
                                                       "format": "date-time"
@@ -10516,6 +10546,9 @@
                                                     "EmailAddress": {
                                                       "type": "string",
                                                       "format": "email"
+                                                    },
+                                                    "IsPrimary": {
+                                                      "type": "boolean"
                                                     },
                                                     "createdAt": {
                                                       "type": "string",
@@ -13347,6 +13380,9 @@
                                                                     }
                                                                   }
                                                                 },
+                                                                "IsPrimary": {
+                                                                  "type": "boolean"
+                                                                },
                                                                 "createdAt": {
                                                                   "type": "string",
                                                                   "format": "date-time"
@@ -13520,6 +13556,9 @@
                                                                     }
                                                                   }
                                                                 },
+                                                                "IsPrimary": {
+                                                                  "type": "boolean"
+                                                                },
                                                                 "createdAt": {
                                                                   "type": "string",
                                                                   "format": "date-time"
@@ -13667,6 +13706,9 @@
                                                                 "EmailAddress": {
                                                                   "type": "string",
                                                                   "format": "email"
+                                                                },
+                                                                "IsPrimary": {
+                                                                  "type": "boolean"
                                                                 },
                                                                 "createdAt": {
                                                                   "type": "string",
@@ -16708,6 +16750,9 @@
               "EmailAddress": {
                 "type": "string",
                 "format": "email"
+              },
+              "IsPrimary": {
+                "type": "boolean"
               }
             }
           }
@@ -17101,6 +17146,9 @@
           "EmailAddress": {
             "type": "string",
             "format": "email"
+          },
+          "IsPrimary": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -22088,6 +22136,9 @@
                             }
                           }
                         },
+                        "IsPrimary": {
+                          "type": "boolean"
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -22235,6 +22286,9 @@
                         "EmailAddress": {
                           "type": "string",
                           "format": "email"
+                        },
+                        "IsPrimary": {
+                          "type": "boolean"
                         },
                         "createdAt": {
                           "type": "string",
@@ -22408,6 +22462,9 @@
                               }
                             }
                           }
+                        },
+                        "IsPrimary": {
+                          "type": "boolean"
                         },
                         "createdAt": {
                           "type": "string",
@@ -24731,6 +24788,9 @@
                                         }
                                       }
                                     },
+                                    "IsPrimary": {
+                                      "type": "boolean"
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -24878,6 +24938,9 @@
                                     "EmailAddress": {
                                       "type": "string",
                                       "format": "email"
+                                    },
+                                    "IsPrimary": {
+                                      "type": "boolean"
                                     },
                                     "createdAt": {
                                       "type": "string",
@@ -25051,6 +25114,9 @@
                                           }
                                         }
                                       }
+                                    },
+                                    "IsPrimary": {
+                                      "type": "boolean"
                                     },
                                     "createdAt": {
                                       "type": "string",
@@ -27112,6 +27178,9 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "IsPrimary": {
+                "type": "boolean"
               }
             }
           }
@@ -27591,6 +27660,9 @@
                 }
               }
             }
+          },
+          "IsPrimary": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
