@@ -4,7 +4,8 @@
   "info": {
     "singularName": "address",
     "pluralName": "addresses",
-    "displayName": "Address"
+    "displayName": "Address",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -37,6 +38,10 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::address-type.address-type"
+    },
+    "IsPrimary": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
