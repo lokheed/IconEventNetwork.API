@@ -45,6 +45,19 @@ it("COMMON-- Address: Should return addresses for authenticated user", async () 
             Line2: '',
             City: 'Springfield',
             PostalCode: '21345',
+            IsPrimary: false,
+            country: { disconnect: [], connect: [ { id: country.id} ] },
+            country_subdivision: { disconnect: [], connect: [ { id: countrySubdivision.id} ] },
+            address_type: { disconnect: [], connect: [ { id: addressTypeHome.id} ] },
+        },
+    });  
+    strapi.query("api::address.address").create({
+        data: {
+            Line1: '123 Main St',
+            Line2: '',
+            City: 'Winterfield',
+            PostalCode: '91345',
+            IsPrimary: true,
             country: { disconnect: [], connect: [ { id: country.id} ] },
             country_subdivision: { disconnect: [], connect: [ { id: countrySubdivision.id} ] },
             address_type: { disconnect: [], connect: [ { id: addressTypeHome.id} ] },
@@ -56,6 +69,7 @@ it("COMMON-- Address: Should return addresses for authenticated user", async () 
             Line2: 'Suite 500',
             City: 'Summerfield',
             PostalCode: '12346',
+            IsPrimary: false,
             country: { disconnect: [], connect: [ { id: country.id} ] },
             country_subdivision: { disconnect: [], connect: [ { id: countrySubdivision.id} ] },
             address_type: { disconnect: [], connect: [ { id: addressTypeOffice.id} ] },
@@ -78,7 +92,7 @@ it("COMMON-- Address: Should return addresses for authenticated user", async () 
       });    
       
     await request(strapi.server.httpServer) // app server is an instance of Class: http.Server
-    .get("/api/addresses?sort=PostalCode")
+    .get("/api/addresses?sort[0]=IsPrimary%3Adesc&sort[1]=PostalCode")
     .set('accept', 'application/json')
     .set('Content-Type', 'application/json')
     .set('Authorization', 'Bearer ' + jwt)
@@ -86,9 +100,10 @@ it("COMMON-- Address: Should return addresses for authenticated user", async () 
     .expect(200)
     .then((data) => {
         expect(data.body).toBeDefined();
-        expect(data.body.data.length).toBe(2);
-        expect(data.body.data[0].attributes.City).toBe('Summerfield');
-        expect(data.body.data[1].attributes.City).toBe('Springfield');
+        expect(data.body.data.length).toBe(3);
+        expect(data.body.data[0].attributes.City).toBe('Winterfield');
+        expect(data.body.data[1].attributes.City).toBe('Summerfield');
+        expect(data.body.data[2].attributes.City).toBe('Springfield');
     });
 });
 
